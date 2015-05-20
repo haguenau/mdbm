@@ -62,7 +62,7 @@ value_%:
 
 
 make-recursive-%::
-	$(foreach DIR,$(SUBDIRS), make -C $(DIR) $(patsubst make-recursive-%,%,$@) && ) /bin/true
+	$(foreach DIR,$(SUBDIRS), make -C $(DIR) $(patsubst make-recursive-%,%,$@) && ) true
 
 # automaticly perform some actions recursively
 default-make-target: make-recursive-default-make-target

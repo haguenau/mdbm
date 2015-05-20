@@ -81,10 +81,10 @@ $(foreach test, $(TESTS), $(eval $(call CppExeTargetRules,$(test),,$(LD_EXTRA)))
 
 test:: $(TESTEXES)
 	@echo "RUNNING UNIT TESTS MODE=$(MODE), FAST=$(FAST) !!!!"
-	$(foreach test, $(TESTS), make run-$(test) && ) /bin/true
+	$(foreach test, $(TESTS), make run-$(test) && ) true
 
 valg:: $(TESTEXES)
-	$(foreach test, $(TESTS), make valg-$(test) && ) /bin/true
+	$(foreach test, $(TESTS), make valg-$(test) && ) true
 
 clean :: clean-objs $(foreach exe, $(TESTS), clean-exe-$(exe))
 #clean :

@@ -36,6 +36,6 @@ install-all: all install
 	make -C src/perl install
 
 clean::
-	make -C src/perl clean || /bin/true
+	make -C src/perl clean || true
 	make -C gendoc clean
 
