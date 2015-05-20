@@ -96,7 +96,7 @@ public:
 
 class PLockFile {
   /// A memory mapped lock and register file
-  /// It contains: 
+  /// It contains:
   ///   The PLockHdr header structure
   ///   an array of (int32_t) registers (zero-initialized)
   ///   an array of PMutexRecords
@@ -108,7 +108,7 @@ public:
 #ifdef DYNAMIC_LOCK_EXPANSION
   // NOTE: it's unreasonable/unsafe to expand both registers and locks, as this
   // would force one to move, or for there to be one highly-contended lock for *all* operations
-  int Expand(int newLockCount); 
+  int Expand(int newLockCount);
 #endif // DYNAMIC_LOCK_EXPANSION
   // Returns the number of mutex locks
   int GetNumLocks();
@@ -166,7 +166,7 @@ struct MLockTlsEntry;
 
 // multi-lock
 //   We divide locks up into some number of "base" single locks,
-//   and one composite lock that can be single, shared (R/W), or partitioned (indexed). 
+//   and one composite lock that can be single, shared (R/W), or partitioned (indexed).
 class MLock {
 public:
   MLock();

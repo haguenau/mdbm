@@ -73,8 +73,8 @@ clearCache(char *cacheDB)
 }
 
 /*
- * We must manipulate the 2 db's independently, rather than together as a 
- * cache+backingstore configuration (via mdbm_set_backingstore). 
+ * We must manipulate the 2 db's independently, rather than together as a
+ * cache+backingstore configuration (via mdbm_set_backingstore).
  * This is necessary because we cannot delete an entry from the cache without
  * deleting it from the backing store too. There is a flag called MDBM_CACHE_ONLY,
  * but this could only be used with mdbm_store(), not mdbm_delete().
@@ -121,7 +121,7 @@ refetchKeys(char *cacheDB, char *bsDB)
         return FETCH_KEYS_ERROR;
     }
 
-    /* within the loop, we will lock the backing store db by key, 
+    /* within the loop, we will lock the backing store db by key,
        process the associated entry in the cache db,
        then unlock the backing store db by key */
     while (dkey.dsize > 0) {
@@ -163,7 +163,7 @@ refetchKeys(char *cacheDB, char *bsDB)
         ret = LOCK_ERROR;
     } else if (ret == LOCK_ERROR) {
         /* this means we broke out of the iteration loop early due to locking
-           issue with backing store, so must perform an explicit unlock 
+           issue with backing store, so must perform an explicit unlock
            on the cache now */
         if (mdbm_unlock_smart(cdbh, NULL, 0) == -1) {
             perror("mdbm_replace:refetchKeys: failed to unlock the cache db: ");

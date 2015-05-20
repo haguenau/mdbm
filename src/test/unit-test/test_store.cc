@@ -979,7 +979,7 @@ MdbmUnitTestStore::test_StoreChurnOversize()
       CPPUNIT_ASSERT(0 == mdbm_delete(db, kdat));
     }
 
-    { 
+    {
         // dump coverage... but to /dev/null
         StdoutDiverter diverter("/dev/null");
         mdbm_dump_all_page(db);
@@ -1783,7 +1783,7 @@ MdbmUnitTestStore::modifyTestXLobj(StoreType storeType)
     //val.dptr = baselineData;
     //val.dsize = (pgsize * 10) + SLIGHTLY_SMALLER_DELTA + (storeType == DO_STORE_STR ? 1 : 0);
     cval.dptr = val.dptr;
-    cval.dsize = (storeType==DO_STORE_STR) ? strlen(val.dptr)+1 : val.dsize; 
+    cval.dsize = (storeType==DO_STORE_STR) ? strlen(val.dptr)+1 : val.dsize;
     compareLargeData(mdbm, &ky, cval);
 
     key = SIMPLE_KEY_PREFIX;
@@ -1795,7 +1795,7 @@ MdbmUnitTestStore::modifyTestXLobj(StoreType storeType)
     val.dptr = ky.dptr = const_cast<char *> (key.c_str());
     val.dsize = ky.dsize = key.size() + 1;
     cval.dptr = val.dptr;
-    cval.dsize = (storeType==DO_STORE_STR) ? strlen(val.dptr)+1 : val.dsize; 
+    cval.dsize = (storeType==DO_STORE_STR) ? strlen(val.dptr)+1 : val.dsize;
     compareLargeData(mdbm, &ky, cval);
 
     mdbm_close(mdbm);

@@ -30,7 +30,7 @@ my $CompareDirectory;  # Directory containing new performance data to compare ag
 sub usage
 {
     my $script = basename($0);
-    print STDERR ($script . " [options] 
+    print STDERR ($script . " [options]
 
 Options:
 
@@ -62,8 +62,8 @@ sub getCmdLineOptions(@)
     Getopt::Long::config (qw(bundling autoabbrev no_pass_through));
 
     my $result = GetOptions("t|test-output=s" => \$InputFile,
-                            "r|results-directory=s"    => \$TapDirectory, 
-                            "c|other-directory=s"    => \$CompareDirectory, 
+                            "r|results-directory=s"    => \$TapDirectory,
+                            "c|other-directory=s"    => \$CompareDirectory,
                             "p|percent-range=i"    => \$PercentRange,
                             "h|help" => sub { usage(); exit 0; },
                             "b|baseline-directory=s" => \$BaselineResults);
@@ -131,7 +131,7 @@ sub comparePerformances()
                 my $okNotOk;
                 my $compareTo;
                 my $skip = 0;      # skip outputting this line
-                my $beyondWithin;  # "beyond" or "within" for pretty-print 
+                my $beyondWithin;  # "beyond" or "within" for pretty-print
                 if ($bits == 32) {
                     $compareTo = $times32bit{$test};
                 } else {
@@ -247,7 +247,7 @@ sub main
 
   if (not defined $BaselineResults) {
     if (not defined $TapDirectory) {
-        print 
+        print
         "One of the following options is required: --baseline-direcotry or --results-directory\n";
         exit(1);
     }

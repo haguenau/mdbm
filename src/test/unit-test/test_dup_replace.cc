@@ -268,7 +268,7 @@ void DupReplaceTestBase::DupReplaceShared() {
 void DupReplaceTestBase::DupReplacePart() {
   TRACE_TEST_CASE("DupReplacePartitioned");
   // we should run at least 1, and this is the fastest (~70sec)
-  // SKIP_IF_FAST_VALGRIND() 
+  // SKIP_IF_FAST_VALGRIND()
   DupReplaceInner(MDBM_PARTITIONED_LOCKS);
 }
 

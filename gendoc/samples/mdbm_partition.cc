@@ -62,7 +62,7 @@ openDb(unsigned int  pageSize = PageSize,
     unsigned int mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;   // 0664
     int flags = MDBM_O_RDWR | MDBM_O_CREAT | MDBM_O_TRUNC
                 | MDBM_DBSIZE_MB    // Initial size specified in MBytes
-                | (largeObjects ? MDBM_LARGE_OBJECTS : 0) 
+                | (largeObjects ? MDBM_LARGE_OBJECTS : 0)
                 | MDBM_PARTITIONED_LOCKS;
 
     // Should only set -P flag to enable Pthread locking if all processes accessing this MDBM

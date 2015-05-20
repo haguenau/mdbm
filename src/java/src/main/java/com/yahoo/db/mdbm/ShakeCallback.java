@@ -4,13 +4,13 @@ package com.yahoo.db.mdbm;
 
 /**
  * See: for details. http://docs.corp.yahoo.com/svn/yahoo/stack/core/mdbm/docs/mdbm_shake.html
- * 
+ *
  * This interface wraps shake v3 only.
- * 
+ *
  * Currently unsupported.
- * 
+ *
  * @author areese
- * 
+ *
  */
 public interface ShakeCallback {
     /**

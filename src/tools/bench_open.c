@@ -93,7 +93,7 @@ main (int argc, char** argv)
         end = GetFloatTime();
         /*fprintf(stderr, "Test:%s:%s\t ended at %f for %d reps\n", */
         /*    testName, lockModeNames[l], end, REPS);*/
-        fprintf(stderr, "Test:%s:%s\t elapsed % 7.3f (open = %7.3f) for %d reps\n", 
+        fprintf(stderr, "Test:%s:%s\t elapsed % 7.3f (open = %7.3f) for %d reps\n",
             testName, lockModeNames[l], end-start, ((double)openSum)/1000000.0, REPS);
       }
     }

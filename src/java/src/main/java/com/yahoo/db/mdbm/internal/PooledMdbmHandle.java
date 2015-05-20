@@ -173,7 +173,7 @@ public class PooledMdbmHandle extends ClosedBaseChecked implements MdbmInterface
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see yjava.db.mdbm.MdbmInterface#prune(PruneCallback prune, Object param)
      */
     @Override
@@ -213,7 +213,7 @@ public class PooledMdbmHandle extends ClosedBaseChecked implements MdbmInterface
 
     /**
      * ITERATION
-     * 
+     *
      * @throws MdbmException
      **/
 

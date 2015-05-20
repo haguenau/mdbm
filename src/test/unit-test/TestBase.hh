@@ -189,7 +189,7 @@ public:
     int    testLevel;     ///< depth of tests to run (from environment)
     string suiteName;     ///< short, descriptive test-suite name
     string testName;      ///< short, descriptive test-case name
-    int    versionFlag;   ///< mdbm_open option MDBM_CREATE_V3 
+    int    versionFlag;   ///< mdbm_open option MDBM_CREATE_V3
     string versionString; ///< mdbm version string "v3"
 private:
     bool   autoclean;     ///< controls automatic deletion of temp test directory

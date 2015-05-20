@@ -7,9 +7,9 @@ import java.io.Closeable;
 /**
  * This is an abstract class that aids in checking if something has already been closed, and throws an exception if it's
  * been closed.
- * 
+ *
  * @author areese
- * 
+ *
  */
 public abstract class ClosedBaseChecked implements Closeable {
 
@@ -26,7 +26,7 @@ public abstract class ClosedBaseChecked implements Closeable {
     private final boolean throwOnError;
 
     /**
-     * 
+     *
      * @param closed true if this object starts off closed, false if it starts opened
      */
     public ClosedBaseChecked() {
@@ -34,7 +34,7 @@ public abstract class ClosedBaseChecked implements Closeable {
     }
 
     /**
-     * 
+     *
      * @param throwOnError true if IllegalStateException should be thrown when isClosed is called and closed=true
      */
     public ClosedBaseChecked(boolean throwOnError) {
@@ -42,7 +42,7 @@ public abstract class ClosedBaseChecked implements Closeable {
     }
 
     /**
-     * 
+     *
      * @param closed true if this object starts off closed, false if it starts opened
      * @param throwOnError true if IllegalStateException should be thrown when isClosed is called and closed=true
      */
@@ -53,7 +53,7 @@ public abstract class ClosedBaseChecked implements Closeable {
 
     /**
      * Check if this object is closed possibly throw an IllegalStateException if it is closed.
-     * 
+     *
      * @return the closed value
      * @throws IllegalStateException if constructed to throw when you try and use a closed object.
      */
@@ -84,11 +84,11 @@ public abstract class ClosedBaseChecked implements Closeable {
 
     /**
      * The closing class should implement release and return true or false based on if the object is closed.
-     * 
+     *
      * For most cases, one should just return true, and that will mark the object as closed. For reference counted and
      * shared subclasses, the subclass should check it's reference counting and decide if the object is considered
      * closed or if it is still open.
-     * 
+     *
      * @return the close status, true if the object is closed when release is done, false if the object can still have
      *         closed called.
      */

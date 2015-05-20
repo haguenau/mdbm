@@ -1,7 +1,7 @@
 /* Copyright 2013 Yahoo! Inc.                                         */
 /* See LICENSE in the root of the distribution for licensing details. */
 
-/* 
+/*
  * Given pathname of an MDBM, remove all its lock files.
  * Use this program with extreme caution: you should only use it when all processes that
  * access the MDBM whose locks are being deleted are not running.  Otherwise, the MDBM

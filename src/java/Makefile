@@ -43,5 +43,5 @@ install:: default-make-target
 
 clean :: clean-objs
 
-maven: 
+maven:
 	LD_LIBRARY_PATH=../lib/object/ mvn -B clean verify -Djava.awt.headless=true -DfailIfNoTests=false  -DnativeDir=../lib/object/ -DlibDir=object/

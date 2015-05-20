@@ -26,7 +26,7 @@ CPP_SOURCES=      \
 $(OBJDIR)/libmdbm_cxx.so : $(SOURCES:%.c=$(OBJDIR)/%.o) $(CPP_SOURCES:%.cc=$(OBJDIR)/%.o) $(HEADERS)
 	$(CC) $(CFLAGS) $(PEDANTIC) $(filter-out %.h %.hh,$^) $(LDADD) -fPIC -shared -o $@
 
-build-lib: $(OBJDIR)/libmdbm_cxx.so 
+build-lib: $(OBJDIR)/libmdbm_cxx.so
 
 clean :: clean-objs
 

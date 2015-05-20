@@ -1230,7 +1230,7 @@ main(int argc, char** argv)
     string newfname;
 
     if (optInfile && !optCdbdump && strstr(optInfile, ".mdbm")) {
-        cout << "Assuming that file " << optInfile 
+        cout << "Assuming that file " << optInfile
              << " is an MDBM (so importing data is not necessary)." << endl << flush;
 
         MDBM *db = openMdbmAndError(optInfile, MDBM_O_RDONLY, 0444, 0, 0, "open input file");

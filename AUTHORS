@@ -2,9 +2,9 @@ Based on:
   mdbm - ndbm work-alike hashed database library based on sdbm which is
   based on Per-Aake Larson's Dynamic Hashing algorithms.
   BIT 18 (1978).
- 
+
   sdbm Copyright (c) 1991 by Ozan S. Yigit (oz@nexus.yorku.ca)
- 
+
   Modifications that:
        . Allow 64 bit sized databases,
        . used mapped files & allow multi reader/writer access,
@@ -21,7 +21,7 @@ Based on:
        mdbm Copyright (c) 1995, 1996 by Larry McVoy, lm@sgi.com.
        mdbm Copyright (c) 1996 by John Schimmel, jes@sgi.com.
        mdbm Copyright (c) 1996 by Andrew Chang awc@sgi.com
- 
+
   Modification that
        support NT/WIN98/WIN95 WIN32 environment
        support memory only (non-mmaped) database
@@ -30,8 +30,8 @@ Based on:
 
   Modifications for:
        . Large object storage
-       . Overflow pages 
-       . Windowed mode access 
+       . Overflow pages
+       . Windowed mode access
        . Hash-based intra-page scanning
   By Rick Reed, Yahoo!, Inc.
 
@@ -43,9 +43,9 @@ Based on:
     2013 Steve Carney, Yahoo!, Inc.
     2013 Tim Crowder, Yahoo!, Inc.
     2013 Maxim Kislik, Yahoo!, Inc.
- 
+
   Conversion from proprietary to PThreads based locking by Tim Crowder, Yahoo!, Inc.
- 
+
   Modifications for:
        . Extensive documentation
        . Many added tools

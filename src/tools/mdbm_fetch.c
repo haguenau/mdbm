@@ -108,10 +108,10 @@ main (int argc, char** argv)
     {
         datum key, val;
         MDBM_ITER iter;
-        
+
         key.dptr = argv[optind+1];
         key.dsize = strlen( key.dptr );
-        
+
         if (oflags & MDBM_PARTITIONED_LOCKS) {
             mdbm_plock(db,&key,0);
         } else {

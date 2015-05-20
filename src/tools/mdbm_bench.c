@@ -84,7 +84,7 @@ attr_destroy:
 
 
 
-extern int  benchmarkExisting(const char *filename, double percentWrites, int lockmode, 
+extern int  benchmarkExisting(const char *filename, double percentWrites, int lockmode,
                               const char *outputfile, uint optCount, int verbose);
 
 typedef struct {
@@ -1528,7 +1528,7 @@ main (int argc, char** argv)
         }
     }
 
-    shm = mdbm_shmem_open(STATSFILE, 
+    shm = mdbm_shmem_open(STATSFILE,
             MDBM_SHMEM_RDWR|MDBM_SHMEM_CREATE|MDBM_SHMEM_TRUNC, STATSSIZE, &init);
     if (!shm) {
         mdbm_logerror(LOG_ALERT,0,"mdbm_shmem_open(%s)",STATSFILE);

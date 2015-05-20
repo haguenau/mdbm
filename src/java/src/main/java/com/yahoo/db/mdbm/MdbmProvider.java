@@ -16,24 +16,24 @@ import com.yahoo.db.mdbm.internal.SynchronizedMdbm;
  * The best way to use this is to call com.yahoo.db.mdbm.MdbmProvider.openPool(String, int, int, int, int, int) This
  * will open a pool of mdbm handles, and you can acquire and release a handle from the pool for use within a single
  * thread. Mdbm handles are not thread safe and must not be shared.
- * 
+ *
  * The mdbm handle pool is blocking and will fail to close if you haven't returned the handles to the pool. You can
  * either close the handle or return it to the pool, it will do the right thing underneath.
- * 
+ *
  * <p>
- * 
+ *
  * @author areese
- * 
+ *
  */
 public final class MdbmProvider {
 
     /**
      * Open an mdbm and create a pool of duplicated handles. A handle cannot be shared between threads, but a pool can
      * be. get a handle for operations, and return it when done.
-     * 
+     *
      * @see {yjava.db.mdbm.MdbmProvider.open(String, int, int, int, int)} Creates an mdbm pool of poolSize
-     * 
-     * 
+     *
+     *
      * @param file name of the backing file for the database. <br>
      * @param flags specifies the open-mode for the file, usually either (MDBM_O_RDWR|MDBM_O_CREAT) or (MDBM_O_RDONLY).
      *        Flag MDBM_LARGE_OBJECTS may be used to enable large object support. Large object support can only be
@@ -47,9 +47,9 @@ public final class MdbmProvider {
      *        will be increased to the next \em psize multiple. <br>
      *        \return Upon success, the database handle (which must be passed to all other mdbm functions) is returned.
      *        Otherwise, NULL is returned and errno indicates the type of error that occurred.
-     * 
+     *
      *        Values for \em flags param include:
-     * 
+     *
      *        <ul>
      *        <li>MDBM_O_RDONLY open for reading only</li>
      *        <li>MDBM_O_RDWR open for reading and writing</li>
@@ -93,7 +93,7 @@ public final class MdbmProvider {
 
     /**
      * create and/or open a database <br>
-     * 
+     *
      * @param file name of the backing file for the database. <br>
      * @param flags specifies the open-mode for the file, usually either (MDBM_O_RDWR|MDBM_O_CREAT) or (MDBM_O_RDONLY).
      *        Flag MDBM_LARGE_OBJECTS may be used to enable large object support. Large object support can only be
@@ -107,9 +107,9 @@ public final class MdbmProvider {
      *        will be increased to the next \em psize multiple. <br>
      *        \return Upon success, the database handle (which must be passed to all other mdbm functions) is returned.
      *        Otherwise, NULL is returned and errno indicates the type of error that occurred.
-     * 
+     *
      *        Values for \em flags param include:
-     * 
+     *
      *        <ul>
      *        <li>MDBM_O_RDONLY open for reading only</li>
      *        <li>MDBM_O_RDWR open for reading and writing</li>
@@ -182,7 +182,7 @@ public final class MdbmProvider {
     /**
      * This function will return a synchronized mdbm from a handle. This uses Java synchronized to perform locking. You
      * must discard oldInterface after calling this.
-     * 
+     *
      * @param oldInterface
      * @return
      */

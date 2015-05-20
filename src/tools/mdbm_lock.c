@@ -85,7 +85,7 @@ int main (int argc, char** argv) {
     if (need_check) {
       fprintf(stderr, "Warning: previous lock owner died! \nYou should run mdbm_check\n");
     }
-    
+
     if (dump) {
       fprintf(stderr, "============= printing state ===============\n");
       print_lock_state_inner(locks);
@@ -138,7 +138,7 @@ int main (int argc, char** argv) {
           exit(2);
       }
     }
-    
+
     /* TODO, need close-locks-inner, or to more propperly abstract the locks struct... */
 
     return 0;

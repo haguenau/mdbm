@@ -48,7 +48,7 @@ TESTS=                       \
   test_stats                 \
   test_store                 \
   test_tsc                   \
-  test_util   
+  test_util
 
 # LOCKING TESTS:
 TESTS+=                       \
@@ -57,7 +57,7 @@ TESTS+=                       \
 
 
 MYLIBS =  -L$(TOPDIR)/src/lib/$(OBJDIR) -lmdbm
-MYLIBS += -lpthread -lrt -lstdc++ -lreadline -lcppunit 
+MYLIBS += -lpthread -lrt -lstdc++ -lreadline -lcppunit
 LD_EXTRA += $(MYLIBS) -lcppunit $(LOCAL_LDADD)
 CXXFLAGS += -I$(TOPDIR)/src/lib
 
@@ -68,7 +68,7 @@ TESTEXES= $(patsubst %, $(OBJDIR)/%, $(TESTS))
 #TESTTESTS= $(patsubst %, $(OBJDIR)/%, $(TESTS))
 
 # generate xml test results...
-RUN_ARGS= -tall -x $(1).xml 
+RUN_ARGS= -tall -x $(1).xml
 
 default-make-target: $(TESTEXES)
 
@@ -88,7 +88,7 @@ valg:: $(TESTEXES)
 
 clean :: clean-objs $(foreach exe, $(TESTS), clean-exe-$(exe))
 #clean :
-#	rm -f *.d $(OBJDIR)/*.o $(OBJDIR)/*.lib $(OBJDIR)/*.so *.xml 
+#	rm -f *.d $(OBJDIR)/*.o $(OBJDIR)/*.lib $(OBJDIR)/*.so *.xml
 #	rm -f $(TESTEXES) $(OBJDIR)/CppUnitTestRunner
 
 

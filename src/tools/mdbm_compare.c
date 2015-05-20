@@ -65,14 +65,14 @@ static void cdb_dump(FILE* fp, datum key, datum val) {
 
 
 static void dump_kv(datum key, datum val) {
-    if (flags & MDBM_DUMP_CDB) { 
-      cdb_dump(outfile, key, val); 
+    if (flags & MDBM_DUMP_CDB) {
+      cdb_dump(outfile, key, val);
     } else {
-      if (flags & MDBM_DUMP_KEYS) { 
-        print_bytes("  K ",key,1); 
+      if (flags & MDBM_DUMP_KEYS) {
+        print_bytes("  K ",key,1);
       }
-      if (flags & MDBM_DUMP_VALUES) { 
-        print_bytes("  V ",val,1); 
+      if (flags & MDBM_DUMP_VALUES) {
+        print_bytes("  V ",val,1);
       }
     }
 }
@@ -158,7 +158,7 @@ int main(int argc, char** argv) {
             }
             break;
         case 'h':
-            usage(); 
+            usage();
             return -1;
         case 'k':
             flags |= MDBM_DUMP_KEYS;
@@ -187,10 +187,10 @@ int main(int argc, char** argv) {
       usage();
       return -1;
     }
-    if (optind+2 != argc) { 
+    if (optind+2 != argc) {
       fprintf(stderr, "ERROR: must provide two mdbm files to compare !\n");
-      usage(); 
-      return 1; 
+      usage();
+      return 1;
     }
 
     if (!(oflags&MDBM_OPEN_NOLOCK)) {
@@ -216,7 +216,7 @@ int main(int argc, char** argv) {
     if (winsize) {
         mdbm_set_window_size(db2,winsize);
     }
-    
+
     if (outname) {
       outfile = fopen(outname, "wb");
       if (!outfile) {
@@ -238,7 +238,7 @@ int main(int argc, char** argv) {
       diffcount += dump_different(db2, db1, 1, 0);
     }
 
-    if (flags & MDBM_DUMP_CDB) { 
+    if (flags & MDBM_DUMP_CDB) {
         /* cdbdump requires extra newline at the end */
         fputc('\n', outfile);
     }
@@ -246,17 +246,17 @@ int main(int argc, char** argv) {
     retval = (diffcount!=0) ? 1:0;
 
 cleanup:
-    if (db1) { 
-      mdbm_close(db1); 
-      db1=NULL; 
+    if (db1) {
+      mdbm_close(db1);
+      db1=NULL;
     }
-    if (db2) { 
-      mdbm_close(db2); 
-      db2=NULL; 
+    if (db2) {
+      mdbm_close(db2);
+      db2=NULL;
     }
-    if (outfile && outfile!=stdout) { 
-      fclose(outfile); 
-      outfile=NULL; 
+    if (outfile && outfile!=stdout) {
+      fclose(outfile);
+      outfile=NULL;
     }
     return retval;
 }

@@ -21,7 +21,7 @@ buildtgz: prepbuildtarball
 	tar czv -C ./build/ -f ./build/$(TARBALL) ${PACKAGE_WITH_VERSION}
 
 prepbuildtarball: git-export
-	cp ${PACKAGE}.spec ./build/${PACKAGE_WITH_VERSION}/redhat/ 
+	cp ${PACKAGE}.spec ./build/${PACKAGE_WITH_VERSION}/redhat/
 
 specfile: $(PACKAGE).spec
 
@@ -43,5 +43,5 @@ prepclean:
 clean:
 	rm -rf ./build/* ./dist/* 2>/dev/null || :
 
-realclean: clean 
+realclean: clean
 	rmdir ./build/ ./dist/ 2>/dev/null || :

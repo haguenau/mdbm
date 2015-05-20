@@ -9,11 +9,11 @@ import com.yahoo.db.mdbm.internal.Deallocator.Dealloc;
  * Cleaner is a special type of PhatomReference and when the GC see's it during reference processing, it will call the
  * runnable method. This allows us to call a special JNI Free function that is implemented in Destructor, which only
  * takes a long which is actually a C pointrer.
- * 
+ *
  * This also deals with ensuring that we don't double free if the resource has been closed.
- * 
+ *
  * @author areese
- * 
+ *
  */
 public abstract class DeallocatingClosedBase extends ClosedBaseChecked {
     protected volatile long pointer = 0L;

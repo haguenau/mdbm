@@ -48,7 +48,7 @@ sub shake_me($$$$)
       $toDelete -= $freeUp;
     }
     $idx++;
-  } 
+  }
 
   $shaken=1;
   return 1;  # Changes were made: items were deleted means we should return 1

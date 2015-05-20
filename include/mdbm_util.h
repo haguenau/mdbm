@@ -62,7 +62,7 @@ mdbm_util_get_size_ref (const char* arg, int default_multiplier, uint64_t *val);
  * NOTE: this destructively *sets* lock_flags to an exact value. Don't pass in
  * existing flags and expect them to be "or'ed".
  */
-extern int 
+extern int
 mdbm_util_lockstr_to_flags(const char* lock_string, int *lock_flags);
 
 #ifdef  __cplusplus

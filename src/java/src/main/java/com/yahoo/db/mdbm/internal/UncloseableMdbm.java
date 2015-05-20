@@ -7,9 +7,9 @@ import com.yahoo.db.mdbm.exceptions.UncloseableMdbmException;
 
 /**
  * This class is used by the pool to make sure that mdbm's it returns can't be closed out from under it.
- * 
+ *
  * @author areese
- * 
+ *
  */
 class UncloseableMdbm extends NativeMdbmImplementation {
 

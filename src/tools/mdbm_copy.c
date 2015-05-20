@@ -46,7 +46,7 @@ main(int argc, char** argv)
         case 'h':
             usage(0);
             break;
-            
+
         case 'L':
             oflags = MDBM_OPEN_NOLOCK;
             lock = 0;

@@ -12,7 +12,7 @@ Ozan Yigit. [wikipedia DBM article](http://en.wikipedia.org/wiki/Dbm)
 
 Yahoo added significant performance enhancements,
 many tools, tests, and comprehensive documentation.
-It has been used in production for over a decade, 
+It has been used in production for over a decade,
 for a wide variety of applications, both large and small.
 
 It is being released under the BSD license.

@@ -60,7 +60,7 @@ openDb(unsigned int  pageSize = PageSize,
     unlink(fileName.c_str());  // Cleanup for testing purposes
     unsigned int mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;   // 0664
     // All processes accessing one MDBM must use the same locking mode: in this case,
-    // exclusive locking is being used because it is the default and no flags 
+    // exclusive locking is being used because it is the default and no flags
     // requesting partitioned or shared locking are being passed to mdbm_open
     int flags = MDBM_O_RDWR | MDBM_O_CREAT | MDBM_O_TRUNC
                 | MDBM_DBSIZE_MB    // Initial size specified in MBytes

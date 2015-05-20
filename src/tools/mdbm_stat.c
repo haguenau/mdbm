@@ -275,7 +275,7 @@ print_free_pages(MDBM *db, int flags)
     /* Total number of free pages is the total number of pages, minus all the allocated pages:
      * total-(data+directory+large_obj).
      */
-    fprintf(stdout, "free-pages           = %8u\n", 
+    fprintf(stdout, "free-pages           = %8u\n",
            dbinfo.db_num_pages - (page_counts.data + page_counts.dir + page_counts.lob) );
 
     /* Also print count free list pages: pages with MDBM_PTYPE_FREE */
@@ -291,9 +291,9 @@ find_oversized(uint32_t size_in_pages, oversized_info_t* oversized_info)
     for (i=0; i < max_count; ++i, ++oversized_info) {
         /* Struct array is sorted, with the last structs are unused and therefore have count==0 */
         if ((oversized_info->count == 0) || (oversized_info->size == size_in_pages)) {
-            break; 
+            break;
         } else if (size_in_pages < oversized_info->size) {
-            /* Shuffle down to insert smaller oversized entry to keep it sorted 
+            /* Shuffle down to insert smaller oversized entry to keep it sorted
  *              * by order of oversized page size */
             memmove(oversized_info + 1, oversized_info, sizeof(oversized_info_t) * (max_count-i-1));
             memset(oversized_info, 0, sizeof(oversized_info_t));    /* re-initialize */
@@ -302,7 +302,7 @@ find_oversized(uint32_t size_in_pages, oversized_info_t* oversized_info)
     }
     return oversized_info;
 }
-    
+
 static int
 oversized_page_handler(void* user, const mdbm_iterate_info_t* info, const kvpair* kv)
 {
@@ -352,7 +352,7 @@ print_oversized_pages(MDBM *db, uint32_t db_page_size, uint32_t num_oversized_pa
     uint32_t i, total_count;
     /* Use the first entry of oversized_info to store common data (more below) */
     /* oversized_info_t oversized_info[num_oversized_pages + 1]; */
-    oversized_info_t *oversized_info = 
+    oversized_info_t *oversized_info =
       (oversized_info_t*)malloc((num_oversized_pages + 1)*sizeof(oversized_info_t));
 
     memset(oversized_info, 0, (num_oversized_pages + 1)*sizeof(oversized_info_t));
@@ -395,9 +395,9 @@ print_residency_info(MDBM *db)
 {
     mdbm_ubig_t pages_in=0, pages_out=0;
     mdbm_check_residency(db, &pages_in, &pages_out);
-    fprintf(stdout, "pages_resident = %llu, bytes_resident = %llu\n", 
+    fprintf(stdout, "pages_resident = %llu, bytes_resident = %llu\n",
         (unsigned long long) pages_in, ((unsigned long long)pages_in)*sysconf(_SC_PAGESIZE));
-    fprintf(stdout, "pages_nonresident = %llu, bytes_nonresident = %llu\n", 
+    fprintf(stdout, "pages_nonresident = %llu, bytes_nonresident = %llu\n",
         (unsigned long long) pages_out, ((unsigned long long)pages_out)*sysconf(_SC_PAGESIZE));
 }
 

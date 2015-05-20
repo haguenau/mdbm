@@ -248,13 +248,13 @@ mdbm_hash4(uint8_t *buf, int len)
  */
 #define FNV_32_PRIME ((u_int32_t) 0x01000193UL)
 #define FNV_64_PRIME ((u_int64_t) 0x100000001b3ULL)
- 
+
 /*
  * The init value is quite arbitrary, but these seem to perform
  * well on both web2 and sequential integers represented as strings.
  */
 #define FNV1_32_INIT ((u_int32_t) 33554467UL)
-#define FNV1_64_INIT ((u_int64_t) 0xcbf29ce484222325ULL)                        
+#define FNV1_64_INIT ((u_int64_t) 0xcbf29ce484222325ULL)
 
 #ifdef  SUPPORT_64BIT
 #  define FNV_PRIME FNV_64_PRIME
@@ -355,16 +355,16 @@ For every delta with one or two bits set, and the deltas of all three
   have at least 1/4 probability of changing.
 * If mix() is run forward, every bit of c will change between 1/3 and
   2/3 of the time.  (Well, 22/100 and 78/100 for some 2-bit deltas.)
-mix() was built out of 36 single-cycle latency instructions in a 
+mix() was built out of 36 single-cycle latency instructions in a
   structure that could supported 2x parallelism, like so:
-      a -= b; 
+      a -= b;
       a -= c; x = (c>>13);
       b -= c; a ^= x;
       b -= a; x = (a<<8);
       c -= a; b ^= x;
       c -= b; x = (b>>13);
       ...
-  Unfortunately, superscalar Pentiums and Sparcs can't take advantage 
+  Unfortunately, superscalar Pentiums and Sparcs can't take advantage
   of that parallelism.  They've also turned some of those single-cycle
   latency instructions into multi-cycle latency instructions.  Still,
   this is the fastest good hash I could find.  There were about 2^^68
@@ -461,9 +461,9 @@ mdbm_ubig_t jenkins_hash (uint8_t* k, int length)
  *
  * Licensed under BSD according to the following clause from:
  *   http://www.azillionmonkeys.com/qed/weblicense.html
- * "If your code is compatible with the old style BSD license and you wish 
- *  to avoid the burden of explicitely protecting code you obtained from 
- *  here from misrepresentation then you can simply cover it with 
+ * "If your code is compatible with the old style BSD license and you wish
+ *  to avoid the burden of explicitely protecting code you obtained from
+ *  here from misrepresentation then you can simply cover it with
  *  the old-style BSD license."
  */
 

@@ -54,7 +54,7 @@ int mdbm_sanity_check;
 
 /*
 //////////////////////////////////////////////////////////////////////
-// Legacy limit-size functions, just for temporary link-time 
+// Legacy limit-size functions, just for temporary link-time
 // compatibility. These will simply error out if invoked.
 //////////////////////////////////////////////////////////////////////
 */
@@ -74,7 +74,7 @@ int mdbm_limit_size_new (MDBM *db, mdbm_ubig_t a, mdbm_shake_func shake, void *x
 */
 
 
-/* 
+/*
 // NOTE: RTLD_LOCAL used by perl and java horks function visibility to plugins.
 // So, explicitly load a sub-library with RTLD_GLOBAL in a library-constructor.
 */
@@ -88,7 +88,7 @@ void mdbm_load_common_globals(void) {
   /*
     int dlflags = RTLD_NOW|RTLD_GLOBAL;
     common_handle = NULL;
-    // try to load sub-library 
+    // try to load sub-library
     // try default path resolution first (allow local test version to override install path)
     common_handle = dlopen("libmdbmcommon.so", dlflags);
 
@@ -162,7 +162,7 @@ tsc_get_usec(void)
     uint64_t cur_usec;
     uint64_t new_tsc_per_usec;
 
-    fprintf(stderr, "@@@ tsc_get_usec() tsc/usec:%"PRIu64" cur_tsc:%"PRIu64" last:%"PRIu64" last_usec:%"PRIu64" @@@\n", 
+    fprintf(stderr, "@@@ tsc_get_usec() tsc/usec:%"PRIu64" cur_tsc:%"PRIu64" last:%"PRIu64" last_usec:%"PRIu64" @@@\n",
             tsc_per_usec, cur_tsc, last_tsc, last_usec);
     if (tsc_per_usec && (cur_tsc < next_gtod_tsc)) {
         /* do not re-read from gtod on high-water-mark failures, for performance reasons: */
@@ -419,7 +419,7 @@ mdbm_set_stat_time_func(MDBM *db, int flags)
  * Check if the padding, and therefore the handle, became corrupt.
  * Return 0 if OK, -1 if not
  */
-static inline int 
+static inline int
 check_guard_padding(MDBM *db, int printMsg)
 {
     if ((db->guard_padding_1 != MDBM_GUARD_PADDING) ||
@@ -443,7 +443,7 @@ check_guard_padding(MDBM *db, int printMsg)
             if (db->guard_padding_4 != MDBM_GUARD_PADDING) {
                 strncat(printbuf, "4 ", left); left -=2;
             }
-            mdbm_logerror(LOG_ERR, 0, 
+            mdbm_logerror(LOG_ERR, 0,
                 "%s: MDBM handle is damaged, user should check for array overrun errors, etc."
                 "\nbad-guards=%s\n", db->db_filename, printbuf);
         }
@@ -3397,7 +3397,7 @@ access_entry(MDBM* db, datum* key, datum* val, datum* buf, struct mdbm_fetch_inf
 
 /* EXTERNAL INTERFACES */
 
-int 
+int
 mdbm_delete_lockfiles(const char* dbname)
 {
   return do_delete_lockfiles(dbname);
@@ -3868,7 +3868,7 @@ mdbm_allocate_handle()
 
     struct mdbm* db = (struct mdbm *) ret;
     if (db) {
-      db->guard_padding_1 = db->guard_padding_2 = MDBM_GUARD_PADDING; 
+      db->guard_padding_1 = db->guard_padding_2 = MDBM_GUARD_PADDING;
       db->guard_padding_3 = db->guard_padding_4 = MDBM_GUARD_PADDING;
     }
 
@@ -4289,7 +4289,7 @@ mdbm_open_inner(const char *filename, int flags, int mode, int pagesize, int dbs
 
     if ((flags & MDBM_OPEN_WINDOWED)){
         if (0 != (db->db_pagesize % db_sys_pagesize)) {
-            mdbm_logerror(LOG_ERR,0,"%s: Page size %d must be a multiple of system page size %d", 
+            mdbm_logerror(LOG_ERR,0,"%s: Page size %d must be a multiple of system page size %d",
                 filename, pagesize, db_sys_pagesize);
             ERROR();
             errno = EINVAL;
@@ -5456,7 +5456,7 @@ mdbm_pre_split(MDBM* db, mdbm_ubig_t pages)
         return -1;
     }
     if (pages > MDBM_NUMPAGES_MAX || pages < 1) {
-        mdbm_log(LOG_ERR, "%s: mdbm_pre_split invalid page count (%u vs %u max)", 
+        mdbm_log(LOG_ERR, "%s: mdbm_pre_split invalid page count (%u vs %u max)",
             db->db_filename, (unsigned int) pages, MDBM_NUMPAGES_MAX);
         errno = EFBIG;
         return -1;
@@ -5694,9 +5694,9 @@ void dump_mdbm_header(MDBM* db) {
     /*mdbm_hdr_stats_t    h_stats;         // store/fetch/delete statistics */
 }
 
-/* prints out the page direcory 
+/* prints out the page direcory
 void dump_mdbm_directory(MDBM* db) {
-  // TODO 
+  // TODO
 }
 */
 /* Debugging function. Walks from chunk to chunk, dumping info about each one. */
@@ -5747,7 +5747,7 @@ compact_db(MDBM* db) {
 
     mdbm_lock(db);
 
-    /* compact mdbm by moving occupied pages down (low VMA), so the free ones 
+    /* compact mdbm by moving occupied pages down (low VMA), so the free ones
      *   are highest (high VMA) (patching the page_table as we go).
      *   Note: LOB/OVERSIZE chunks must move as a contiguous block. */
     MDBM_SIG_DEFER;
@@ -5773,14 +5773,14 @@ compact_db(MDBM* db) {
        * becomes
        *   |--page A --|--page B   --|-- free  ...  ...  --|
        * At each step:
-       *   an occupied page is copied downward, 
+       *   an occupied page is copied downward,
        *   page headers are patched (to maintain the implicit linked list)
        *   the page-table entry is updated
        *   adjacent free-pages are coalesced
        *
        * Moving the highest DATA/LOB page down might be faster,
        * but breaks when things don't fit in the available gap.
-       * Also, updating page-headers, etc for all affected entries is a mess. 
+       * Also, updating page-headers, etc for all affected entries is a mess.
        */
       next = cur + cur_pages;
       nextp = MDBM_PAGE_PTR(db, next);
@@ -5937,12 +5937,12 @@ compact_db(MDBM* db) {
 }
 
 /* Copies an existing entry to a new page.
- * 'page' is the destination page. 
+ * 'page' is the destination page.
  * 'key' and 'val' are the key and value of the entry to be copied.
  * 'hashval' is it's pre-calculated hash-value.
  * 'entry' is a pointer to the pre-existing entry on the old page.
  * 'oldpage' is the page where the entry already exists.
- * On entry, the DB should be locked, and signals deferred. 
+ * On entry, the DB should be locked, and signals deferred.
  */
 int
 copy_page_entry(MDBM *db, mdbm_page_t* page, mdbm_hashval_t hashval, const datum* key, const datum* val, mdbm_entry_t* entry, mdbm_page_t* oldpage)
@@ -6058,12 +6058,12 @@ merge_page_iter (void* user, const mdbm_iterate_info_t* info, const kvpair* kv)
   return ret;
 }
 
-/* Internal function for compress_tree. 
+/* Internal function for compress_tree.
  * Joins two DATA pages into a single page, if possible, by coping entry-by-entry
  * from the page at src_index to the page at dst_index.
  * If the merge fails, we unroll by restoring the old entry-count on the destination page.
  * NOTE: On entry signals should be deferred, the DB locked, and the destination
- * page should be un-fragmented. 
+ * page should be un-fragmented.
  */
 int
 merge_page(MDBM *db, int dest_index, int src_index)
@@ -6129,12 +6129,12 @@ merge_page(MDBM *db, int dest_index, int src_index)
 }
 
 
-/* 
+/*
  * This routine attempts to recursively fold DATA pages from the current size to the
  * next lower power-of-two size.
  * At each step, it pre-calculates whether the folds will succeed in an attempt
  * to avoid needing to unroll changes.
- * If we succeed in folding, then we attempt to de-fragment the resulting 
+ * If we succeed in folding, then we attempt to de-fragment the resulting
  * free-pages via compact_db().
  * */
 int
@@ -6474,7 +6474,7 @@ mdbm_close_fd(MDBM *db)
 void
 mdbm_truncate(MDBM *db)
 {
-    const char *TRUNC_WARN_MSG = 
+    const char *TRUNC_WARN_MSG =
         "mdbm_truncate will result in the loss of the setting.\n"
         "If you'd like to retain this setting, use mdbm_purge() !";
 
@@ -7361,7 +7361,7 @@ mdbm_clean(MDBM* db, int pnum, int flags)
 
     if (pagenum > db->db_max_dirbit || (db->db_flags & MDBM_DBFLAG_NO_DIRTY)) {
         if (pagenum > db->db_max_dirbit) {
-          mdbm_log(LOG_ERR, "%s: mdbm_clean() pagenum:%d > dirbit:%d\n", 
+          mdbm_log(LOG_ERR, "%s: mdbm_clean() pagenum:%d > dirbit:%d\n",
               db->db_filename, pnum, db->db_max_dirbit);
         }
         errno = EINVAL;
@@ -7588,7 +7588,7 @@ fcopy_body(MDBM* db, int fd, int flags)
 /* Perform a copy of an MDBM into a new file.  Retry "tries" times, returning 1
  * if after copying we discovered that a retry is needed, which can happen when
  * an MDBM split during the copying process.
- */ 
+ */
 int
 mdbm_internal_fcopy(MDBM* db, int fd, int flags, int tries)
 {
@@ -8525,7 +8525,7 @@ mdbm_bsop_file_alloc_buf(mdbm_bsop_file_t* d, datum* buf, off_t sz)
         }
         /* make valgrind happy about uninitialized padding */
         memset(buf->dptr+old, 0, buf->dsize - old);
-       
+
     }
 
     return 0;
@@ -8784,7 +8784,7 @@ mdbm_set_backingstore(MDBM* db, const mdbm_bsops_t* bsops, void* opt, int flags)
 }
 
 int
-mdbm_replace_backing_store(MDBM* cache, const char* newfile) 
+mdbm_replace_backing_store(MDBM* cache, const char* newfile)
 {
   int ret=0, retval=0;
   mdbm_bsop_mdbm_t* d = (mdbm_bsop_mdbm_t*)cache->db_bsops_data;
@@ -9575,7 +9575,7 @@ int mdbm_preload(MDBM* db)
     return 0;
 }
 
-int mdbm_check_residency(MDBM* db, mdbm_ubig_t *pgs_in, mdbm_ubig_t *pgs_out) 
+int mdbm_check_residency(MDBM* db, mdbm_ubig_t *pgs_in, mdbm_ubig_t *pgs_out)
 {
     int ret = 0;
     size_t max_pages = 1024*1024;
@@ -9604,20 +9604,20 @@ int mdbm_check_residency(MDBM* db, mdbm_ubig_t *pgs_in, mdbm_ubig_t *pgs_out)
         memset(page_bits, 0, cur_pages);
 
         if (0 != (ret = mincore(base, cur_pages*sys_pg, page_bits)) ) {
-            mdbm_logerror(LOG_ERR,0," mdbm_check_residency: mincore() failed %d : %s", 
+            mdbm_logerror(LOG_ERR,0," mdbm_check_residency: mincore() failed %d : %s",
                 errno, strerror(errno));
             goto resident_out;
         }
         for (i=0; i<cur_pages; ++i) {
             /* only LSB counts for each byte */
-            if (page_bits[i]&1) { ++(*pgs_in); } 
+            if (page_bits[i]&1) { ++(*pgs_in); }
             else { ++(*pgs_out); }
         }
         page_count -= cur_pages;
         base += cur_pages * sys_pg;
     }
 
-resident_out: 
+resident_out:
     free(page_bits);
     return ret;
 }
@@ -9627,7 +9627,7 @@ resident_out:
 #ifdef FALLOC_FL_PUNCH_HOLE
 #define HAVE_SPARSIFY
 int
-mdbm_sparsify_file(const char* filename, int blocksize) 
+mdbm_sparsify_file(const char* filename, int blocksize)
 {
   struct stat st;
   off_t filesize, cur;
@@ -9676,7 +9676,7 @@ mdbm_sparsify_file(const char* filename, int blocksize)
       ret = fallocate(fd, FALLOC_FL_PUNCH_HOLE|FALLOC_FL_KEEP_SIZE, cur, blocksize);
       if (ret < 0) {
         mdbm_log(LOG_ERR, "%s: mdbm_sparsify_file() punch-hole failed at offset:%lu size:%d fd:%d "
-            "errno:%d (%s).\n", 
+            "errno:%d (%s).\n",
             filename, (unsigned long)cur, blocksize, fd, errno, strerror(errno));
         errno=EINVAL;
         goto sparsify_exit;
@@ -9695,7 +9695,7 @@ sparsify_exit:
 
 #ifndef HAVE_SPARSIFY
 int
-mdbm_sparsify_file(const char* filename, int blocksize) 
+mdbm_sparsify_file(const char* filename, int blocksize)
 {
   errno = ENOSYS;
   return -1;

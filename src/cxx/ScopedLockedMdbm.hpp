@@ -4,12 +4,12 @@
 #include <mdbm.h>
 
 
-// TODO 
-// TODO make ScopeLockedMdbm class for 
+// TODO
+// TODO make ScopeLockedMdbm class for
 // TODO   single-threaded
-// TODO   ccmp-based (with acquire/release) multithreaded 
+// TODO   ccmp-based (with acquire/release) multithreaded
 // TODO take key & read/write, use smart-lock (default to exclusive)
-// TODO 
+// TODO
 
 class ScopedLockedMdbm {
 private:
@@ -74,7 +74,7 @@ public:
                 return 1;
             }
         }
-        
+
         return 0;
     }
 

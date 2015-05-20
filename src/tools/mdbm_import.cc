@@ -22,7 +22,7 @@
 static void
 usage()
 {
-    fprintf(stderr, 
+    fprintf(stderr,
 "usage: mdbm_import [options] outfile.mdbm\n"
 "  -3           Create V3 DB\n"
 "  -c           Input is in cdbdump format (default db_dump)\n"

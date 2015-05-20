@@ -2145,7 +2145,7 @@ public:
     // Use ParseVerify to start processing and handle the "-h" arg for any Mash command
     // such as mexport/mimport/mcheck/mcompare... that can only accept only a
     // pre-determined number of MDBM parameters.
-    // paramCount mostly defaults to 1, except for commands such as 
+    // paramCount mostly defaults to 1, except for commands such as
     // mcompare and mcopy, which need 2.
     // If isMinimum is true, paramCount is the minimum number of parameters
     virtual int ParseVerify(const vector<string> &args, string &usageMsg, int &stopNow,
@@ -2648,7 +2648,7 @@ public:
         if (ret) {
           fprintf(stdout, "mdbm_check_residency() error %d, %s\n", errno, strerror(errno));
         }
-        fprintf(stdout, "Pages: %llu resident,  %llu nonresident\n", 
+        fprintf(stdout, "Pages: %llu resident,  %llu nonresident\n",
                         (unsigned long long)in, (unsigned long long)out);
         MdbmData.DropHandle(db);
         return ret;
@@ -3974,7 +3974,7 @@ public:
                        string("Force close (disregard open/lock state)"));
     }
 };
- 
+
 class MdbmCloseCommand : public MdbmSimpleCommand
 {
 public:

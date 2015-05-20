@@ -13,7 +13,7 @@ Version 3.0 (11/28/2012)
     specific packages that match the underlying MDBM major version.
     Remove support for perl-5.8. (carney)
 
-2.1 Mon Mar  7 15:44:28 PST 2011 
+2.1 Mon Mar  7 15:44:28 PST 2011
         - Updated Perl 5.10 support for RHEL.
 
 2.0 Tue Jun 16 07:41:14 PDT 2009
@@ -57,7 +57,7 @@ Version 3.0 (11/28/2012)
 	- upgrade to mdbm 2.5.0
 
 0.04  Mon Sep  9 18:58:34 2002
-        - changed default dbsize to '0' so mdbm will 
+        - changed default dbsize to '0' so mdbm will
           decide as suggested by Rick Reed.
 
 0.03  Wed Jul  3 01:25:28 2002

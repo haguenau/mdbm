@@ -232,9 +232,9 @@ require DynaLoader;
 __PACKAGE__->bootstrap($VERSION);
 
 # MDBM V3 uses XSLoader.  MDBM V4 uses DynaLoader to load RTLD_GLOBAL|RTLD_NOW due to lock plugin.
-# MDBM V4 has a plugin architecture so we don't have to depend on proprietary locks, 
+# MDBM V4 has a plugin architecture so we don't have to depend on proprietary locks,
 # but platform makefiles require us to provide useless stubs. If libmdbm isn't fully
-# loaded/constructed with it's symbols global, before the plugin is loaded, 
+# loaded/constructed with it's symbols global, before the plugin is loaded,
 # then it will use the broken stubs and fail to work.
 # We therefore need DynaLoader to load MDBM_File with options RTLD_GLOBAL|RTLD_NOW.
 # By default DynaLoader will load any module with RTLD_LAZY, which would MDBM fail to use the
@@ -249,12 +249,12 @@ sub dl_load_flags { 0x1 }
 sub dl_loadflags { 0x1 }
 
 # Preloaded methods go here.
-    
+
 %MDBM_File::shake_func_hash = ();
 %MDBM_File::shake_obj_hash = ();
-    
+
 sub limit_size_v3($$;$$)
-{   
+{
     my ($self, $size, $shake_func, $shake_obj ) = @_;
     if (defined($shake_func)) {
         my $hashId = getHashId($self);
@@ -267,7 +267,7 @@ sub limit_size_v3($$;$$)
     }
 }
 
-sub pl_mdbm_shake_v3_callback($$$;$) 
+sub pl_mdbm_shake_v3_callback($$$;$)
 {
     my ($shake_data, $key, $val, $mdbm) = @_;
 
@@ -294,7 +294,7 @@ sub clean_shake_entries($)
 }
 
 sub UNTIE($)
-{   
+{
     my ($self) = @_;
     clean_shake_entries($self);
 }
@@ -365,7 +365,7 @@ The key of the MDBM entry being added that is about to fail to be stored.
 
 The value of the MDBM entry being added that is about to fail to be stored.
 
-=item Object 
+=item Object
 
 Some anonymous object reference you get in your callback from argument 3 of limit_size_v3().
 

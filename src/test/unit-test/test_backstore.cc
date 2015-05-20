@@ -2447,7 +2447,7 @@ void BackStoreTestSuite::BsTestReplaceWithCache()
            << " Using DB cache file=" << dbName << endl;
       CPPUNIT_ASSERT_MESSAGE(msg.str(),(ret != 0));
     }
-    
+
 
     // set BS
     ret = mdbm_set_backingstore(dbh, MDBM_BSOPS_MDBM, bsdbh, 0);

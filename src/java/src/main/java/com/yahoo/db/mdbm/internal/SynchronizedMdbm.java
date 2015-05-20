@@ -15,11 +15,11 @@ import com.yahoo.db.mdbm.exceptions.MdbmLockFailedException;
 
 /**
  * A synchronized wrapper for any mdbm object to allow people to block when they share the object between threads.
- * 
+ *
  * You probably shouldn't be using this.
- * 
+ *
  * @author areese
- * 
+ *
  */
 public class SynchronizedMdbm extends ClosedBaseChecked implements MdbmInterface {
     protected final MdbmInterface proxy;
@@ -174,7 +174,7 @@ public class SynchronizedMdbm extends ClosedBaseChecked implements MdbmInterface
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see yjava.db.mdbm.MdbmInterface#prune(PruneCallback prune, Object param)
      */
     @Override
@@ -214,7 +214,7 @@ public class SynchronizedMdbm extends ClosedBaseChecked implements MdbmInterface
 
     /**
      * ITERATION
-     * 
+     *
      * @throws MdbmException
      **/
 

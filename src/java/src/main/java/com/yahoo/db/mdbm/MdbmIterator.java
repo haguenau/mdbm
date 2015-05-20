@@ -7,7 +7,7 @@ import java.io.Closeable;
 public interface MdbmIterator extends Closeable {
     /**
      * Not for public consumption.
-     * 
+     *
      * @return an Opaque object for internal use.
      */
     public Object getIter();

@@ -472,7 +472,7 @@ void SmokeTestLargeObjSuite::smoke_test_largeobj_11() {
 
 //Function to create Mdbm as cache
 MDBM* SmokeTestLargeObjSuite::create_mdbm(const string& mdbm_name) {
-    int openflags = MDBM_O_RDWR|MDBM_O_CREAT|MDBM_O_TRUNC| 
+    int openflags = MDBM_O_RDWR|MDBM_O_CREAT|MDBM_O_TRUNC|
                     versionFlag|MDBM_LARGE_OBJECTS|MDBM_DBSIZE_MB;
 
     MDBM *mdbm_db = mdbm_open(mdbm_name.c_str(), openflags, 0644, _pageSize, 0);

@@ -38,20 +38,20 @@ The MDBM file is broken up into "chunks", which are 1 or more contiguous physica
 (in units of the db-page-size).
 
 Each chunk starts with a mdbm_page_t structure (including the initial one).
-Each chunk contains a size (p_num_pages), and an offset to the previous chunk 
+Each chunk contains a size (p_num_pages), and an offset to the previous chunk
 (p_prev_num_pages). Together, these form a doubly linked list.
 
-The p_type value near the start of each chunk identifies the type, 
+The p_type value near the start of each chunk identifies the type,
 MDBM_PTYPE_ xxx, where xxx is DIR, DATA, LOB, or FREE.
 
-The first chunk (type DIR) will contain the file header, directory bit vector, and 
+The first chunk (type DIR) will contain the file header, directory bit vector, and
 page-table.
 Successive chunks include normal pages, oversized pages, large-object pages,
 and free-pages.
 
-Free-pages (type FREE) contain a "next" pointer (p_next_free), and the first page is 
-referenced by h_first_free, forming a singly-linked-list. Newly freed pages should 
-be inserted into the free list sorted by address, and adjacent free pages should be 
+Free-pages (type FREE) contain a "next" pointer (p_next_free), and the first page is
+referenced by h_first_free, forming a singly-linked-list. Newly freed pages should
+be inserted into the free list sorted by address, and adjacent free pages should be
 coalesced into a single chunk.
 
 The directory is a linear array of bits, used to convert hash values of keys
@@ -59,24 +59,24 @@ into "logical pages". Logical pages determine an index into the page table,
 which is a linear array of integers that point to actual physical pages in the db.
 This allows physical pages to be changed (moved/expanded/defragged/etc) very quickly.
 
-Data pages (type DATA) contain a series of entry meta-data structures (mdbm_entry_t) 
-at the beginning (lowest VMA) of the page, and the actual key and value data grows 
-down from the end (highest VMA) of the page(s). Oversize data pages may span multiple 
+Data pages (type DATA) contain a series of entry meta-data structures (mdbm_entry_t)
+at the beginning (lowest VMA) of the page, and the actual key and value data grows
+down from the end (highest VMA) of the page(s). Oversize data pages may span multiple
 contiguous physical pages.
 The entry structure contains the length and part of the hash for the key to enable
 fast scanning of a page. Deleted entries are signaled by a key length of 0.
 (This allows fast deletion, at the cost of possible defragmentation later.)
 
-Large-object (type LOB) pages contain db entries that would overwhelm a single 
-data-page. Because we return found entries to users as a pointer,length pair, we 
-can't fragment these entries, so they are stored externally to the data page to 
-which they logically belong. The l_pagenum entry points back to the logical page 
+Large-object (type LOB) pages contain db entries that would overwhelm a single
+data-page. Because we return found entries to users as a pointer,length pair, we
+can't fragment these entries, so they are stored externally to the data page to
+which they logically belong. The l_pagenum entry points back to the logical page
 the large-object belongs to.
 
 NOTE: some DBs may contain an extra, unmerged free-page at the end of the DB, which
 is not listed in the free-list. The existence of h_num_pages (which gives the last
 physical page in the DB) and h_last_chunk (which gives the last used physical chunk
-in the db) creates some ambiguity, and the various check_xxx() functions stop at 
+in the db) creates some ambiguity, and the various check_xxx() functions stop at
 h_last_chunk. It is currently unclear if this ambiguity is by design, or accidental.
 
 
@@ -110,7 +110,7 @@ extern "C" {
 #define MDBM_STAT_TAG_PAGE_STORE        10
 #define MDBM_STAT_TAG_PAGE_DELETE       11
 #define MDBM_STAT_TAG_FLUSH             12
- 
+
 
 /**
  * * Define/Reserve a 20 entry mdbm_counter_t storage structure.
@@ -198,7 +198,7 @@ extern int mdbm_sanity_check;
     if (mdbm_sanity_check && (check_db(db,mdbm_sanity_check,l,1) > 0)) { \
       mdbm_log(LOG_ERR, "fail CHECK_DB_PARTIAL, aborting...\n"); \
       abort(); \
-    } 
+    }
 
 #define CHECK_DB(db)    CHECK_DB_PARTIAL(db,10)
 
@@ -345,7 +345,7 @@ struct mdbm {
     uint32_t            guard_padding_1;  /* Guard padding against handle corruption */
     intptr_t            db_ver_flag;  /* db version (h_magic) */
     int                 db_flags;     /* flags: permissions, large-object, etc */
-    int                 db_cache_mode;/* cache type */ 
+    int                 db_cache_mode;/* cache type */
     struct mdbm_locks*  db_locks;     /* locking structure */
     int                 db_fd;        /* file descriptor for the mmap */
     mdbm_hdr_t*         db_hdr;       /* (mdbm_hdr_t*)(db_base + MDBM_PAGE_T_SIZE); */
@@ -381,7 +381,7 @@ struct mdbm {
     mdbm_window_data_t  db_window;    /* "window" data for partially mmap-ing the db */
     uint64_t            db_lock_wait; /* locking latency time */
     uint32_t            db_sys_pagesize; /* system (OS) page size */
-    mdbm_dup_info_t*    db_dup_info;    /* info for shared mmaps (dup'ed handle) */  
+    mdbm_dup_info_t*    db_dup_info;    /* info for shared mmaps (dup'ed handle) */
     uint64_t            db_dup_map_gen; /* last update from dup_info  */
     void*               m_stat_cb_user; /* opaque user stats callback data */
     int                 m_stat_cb_flags;/* user stats callback options */
@@ -445,7 +445,7 @@ MDBM_DB_CACHEMODE(const MDBM* db)
 
 #define MDBM_NUM_PLOCKS         128
 
-/* 
+/*
  * The functions below, called mdbm_internal_* are MDBM-internal and should not be used
  * by external users.  Their names were changed due to the introduction of non-statically
  * scoped functions due to the addition of libmdbmcommon, which caused namespace collisions
@@ -879,14 +879,14 @@ extern mdbm_page_t* get_window_page(MDBM* db,
 void release_window_pages(MDBM* db);
 void release_window_page(MDBM* db, void* p);
 
-static inline unsigned int 
-MDBM_GET_PAGE_INDEX(MDBM* db, int pagenum) 
+static inline unsigned int
+MDBM_GET_PAGE_INDEX(MDBM* db, int pagenum)
 {
     return db->db_ptable[pagenum].pt_pagenum;
 }
 
 static inline void
-MDBM_SET_PAGE_INDEX(MDBM* db, int pagenum, int index) 
+MDBM_SET_PAGE_INDEX(MDBM* db, int pagenum, int index)
 {
     db->db_ptable[pagenum].pt_pagenum = index;
 }
@@ -1127,7 +1127,7 @@ MDBM_INC_STAT_ERROR_COUNTER(MDBM* db, mdbm_rstats_val_t* v, int tag)
                        MDBM_STAT_CB_INC, 1, db->m_stat_cb_user);
     }
 }
-  
+
 static inline void
 MDBM_ADD_STAT_ERROR_COUNTER(MDBM* db, mdbm_rstats_val_t* v, uint64_t add, int tag)
 {
@@ -1141,7 +1141,7 @@ MDBM_ADD_STAT_ERROR_COUNTER(MDBM* db, mdbm_rstats_val_t* v, uint64_t add, int ta
       }
     }
 }
-  
+
 
 extern void
 MDBM_ADD_STAT_THIST(mdbm_rstats_val_t* v, uint64_t t);
@@ -1187,7 +1187,7 @@ MDBM_ADD_STAT_WAIT(const MDBM* db, mdbm_rstats_val_t* v, uint64_t t_op, int tag)
 
 
 
-extern int 
+extern int
 mdbm_internal_replace(MDBM* db);
 
 extern int

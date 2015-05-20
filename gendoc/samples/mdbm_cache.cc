@@ -56,7 +56,7 @@ openDb(unsigned int  pageSize = PageSize)
     unlink(fileName.c_str());   // cleanup for testing purposes
     unsigned int mode = S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH;   // 0664
     // All processes accessing one MDBM must use the same locking mode: in this case,
-    // exclusive locking is being used because it is the default and no flags 
+    // exclusive locking is being used because it is the default and no flags
     // requesting partitioned or shared locking are being passed to mdbm_open
     int flags = MDBM_O_RDWR | MDBM_O_CREAT | MDBM_O_TRUNC;
 
@@ -366,10 +366,10 @@ main(int   argc,
     insertRecords(mdbm, RecordCount, StartingKey, ValueSize);
 
     // For 1K pages, you can fit 8 records of 100bytes each per page.  So the following will work:
-    // mdbm_cache -m 1024 -c 8 
-    // mdbm_cache -m 2048 -c 16 
+    // mdbm_cache -m 1024 -c 8
+    // mdbm_cache -m 2048 -c 16
     // But the following will fail:
-    // mdbm_cache -m 2048 -c 17 
+    // mdbm_cache -m 2048 -c 17
     fetchRecords(mdbm, RecordCount, StartingKey);
 
     deleteRecords(mdbm, RecordCount, StartingKey);

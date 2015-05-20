@@ -3,7 +3,7 @@
 
 # In MDBM v4 (RHEL6 only), only a 64-bit architecture is supported.
 #
-# This script is expected to be called in the context of a 
+# This script is expected to be called in the context of a
 # Makefile where the following variables are defined:
 #   OBJDIR
 

@@ -36,8 +36,8 @@ extern "C" {
 
   typedef MdbmLockBase* (*mdbm_lock_creator)(void);
 
-  
-  int mdbm_add_lock_plugin(const char* name, mdbm_lock_creator creator) 
+
+  int mdbm_add_lock_plugin(const char* name, mdbm_lock_creator creator)
     __attribute__ ((visibility ("default")));
 
   int do_delete_lockfiles(const char* dbname);
@@ -86,11 +86,11 @@ public:
   //   (user still needs to deal with directory hierarchy)
   virtual int getFilename(const char* dbname, char* lockname, int maxlen) = 0;
   virtual void printState() = 0;
-  // returns one of EXCL, SHARED, or PART 
+  // returns one of EXCL, SHARED, or PART
   virtual MLockType getMode() = 0;
 
   // type is EXCL, SHARED, PART, or INTERNAL
-  //   async is "BLOCK" or "ASYNC" (may return EWOULDBLOCK), 
+  //   async is "BLOCK" or "ASYNC" (may return EWOULDBLOCK),
   //   part is partition (optional)
   //   if previous owner died: sets need_check
   //   if EXCL owner died: may return ESTALE, take out an EXCL lock, and sets 'upgrade'

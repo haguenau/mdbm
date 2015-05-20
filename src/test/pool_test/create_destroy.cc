@@ -26,7 +26,7 @@ int create_and_test_size(MDBM *mdbm_handle, int pool_size) {
 
   LIST_HEAD(test_mdbm_pool_handle_list, mdbm_pool_entry) acquired_handles;
   LIST_INIT(&acquired_handles);
-  
+
   int ret = 0;
   int handles_extracted = 0;
   for (handles_extracted = 0; handles_extracted < pool_size; ++handles_extracted) {
@@ -38,12 +38,12 @@ int create_and_test_size(MDBM *mdbm_handle, int pool_size) {
       } else {
 	  fprintf(stderr, "unable to acquire mdbm handle count %d limit %d\n",
 		  handles_extracted, pool_size);
-	  
+
 	  ret = 1;
 	  break;
       }
     }
-  
+
   while (acquired_handles.lh_first != NULL) {
       MDBM *release_this = acquired_handles.lh_first->mdbm_handle;
       mdbm_pool_entry_t *free_this = acquired_handles.lh_first;
@@ -55,7 +55,7 @@ int create_and_test_size(MDBM *mdbm_handle, int pool_size) {
       LIST_REMOVE(acquired_handles.lh_first, entries);
       free(free_this);
   }
-  
+
   mdbm_pool_destroy_pool(pool);
   return ret;
 }
@@ -73,9 +73,9 @@ int main(int argc, char const** argv) {
       fprintf(stderr, "mdbm_handle is null, aborting.!");
       exit(1);
   }
-    
+
   ret = create_and_test_size(mdbm_handle, atoi(argv[1]));
   mdbm_close(mdbm_handle);
-  
+
   return ret;
 }

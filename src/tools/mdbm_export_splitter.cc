@@ -17,7 +17,7 @@
  *            Default number of buckets is 50.
  * -p <source file prefix> : This is the prefix to identify the source files
  *                           in the input directory.
- * -c : This specifies that the source input files are in cdb format. 
+ * -c : This specifies that the source input files are in cdb format.
  *      Default format is db_dump.
  * --hash-function <hash code> : This number identifies the hash function to use.
  *                  REQUIRED.
@@ -66,7 +66,7 @@ getNumForHashCode(const char *optarg)
         if (foundNum == 0) // OK should be a number and not a name
         {
             int hcode = atoi(optarg);
-            // catch invalid strings like "1crc32", "010" 
+            // catch invalid strings like "1crc32", "010"
             if (hcode != biggestHashCode && str.size() > 1)
             {
                 hcode = -1;
@@ -85,9 +85,9 @@ getNumForHashCode(const char *optarg)
     // Lets translate the name to a number, index equals hash code value
     // so order is important!
     // 0=CRC32 1=EJB 2=PHONG 3=OZ 4=TOREK 5=FNV 6=STL 7=MD5 8=SHA1 9=Jenkins 10=Hsieh
-    string nameList[] = { string("CRC"),      string("EJB"),   string("PHONG"), 
-                          string("OZ"),       string("TOREK"), string("FNV"), 
-                          string("STL"),      string("MD5"),   string("SHA1"), 
+    string nameList[] = { string("CRC"),      string("EJB"),   string("PHONG"),
+                          string("OZ"),       string("TOREK"), string("FNV"),
+                          string("STL"),      string("MD5"),   string("SHA1"),
                           string("JENKINS"),  string("HSIEH"), string() };
 
     char (*pfunc)(char) = reinterpret_cast<char(*)(char)>(static_cast<int(*)(int)>(toupper));
@@ -142,34 +142,34 @@ processOptions(int argc, char ** argv)
     static option longOpts[] = {
         {"hash-function", 1, 0, 0},
         {0, 0, 0, 0}
-    }; 
+    };
     bool        err_flag  = false;
     for (int copt; (copt = getopt_long(argc, argv, shortOpts, longOpts, NULL)) != -1;)
     {
         switch (copt)
         {
-        case 0: 
+        case 0:
             HashCode = getNumForHashCode(optarg);
             if (HashCode == -1)
                 err_flag = true;
             break;
-        case 'b': 
+        case 'b':
             BuckCnt  = atoi(optarg);
             break;
-        case 'c': 
+        case 'c':
             CdbFlag = true;
             break;
-        case 'h': 
+        case 'h':
             usage();
             exit(0);
             break;
-        case 'i': 
+        case 'i':
             InputDir = optarg;
             break;
-        case 'o': 
+        case 'o':
             OutputDir = optarg;
             break;
-        case 'p': 
+        case 'p':
             SrcFilePrefix = optarg;
             break;
         default:
@@ -179,7 +179,7 @@ processOptions(int argc, char ** argv)
 
     int extraArgs = argc - optind;
     err_flag = InputDir.empty() && extraArgs == 0 ? true : err_flag;
-    if (err_flag) 
+    if (err_flag)
     {
         return -1;
     }
@@ -303,7 +303,7 @@ void SplitFile::hashAndSend(const string &key, string &keyLine, string &valueLin
     {
         cerr << "SplitFile: ERROR: Cannot get mdbm_get_hash_value"
              << ", key-size=" << key.size()
-             << ", file=" << fname 
+             << ", file=" << fname
              << ", line-number=" << lineCnt
              << endl;
     }
@@ -359,7 +359,7 @@ void DbDumpSplitFile::split(string &srcfile)
         string  keyline = line;
         string  valline;
         //int     vallen  = -1;
-        
+
         // eat up db_dump header if not yet done so
         if (noMoreHeader == false)
         {
@@ -643,7 +643,7 @@ main(int argc, char **argv)
     for (int cnt = optind; cnt < argc; ++cnt)
     {
         string fqname = argv[cnt];
-        srclist.push_back(fqname); 
+        srclist.push_back(fqname);
     }
 
     // add to list of files based on input source directory and source file name prefix

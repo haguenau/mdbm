@@ -25,7 +25,7 @@
 class YccmpTest: public CppUnit::TestFixture {
 
   CPPUNIT_TEST_SUITE(YccmpTest);
-   
+
   CPPUNIT_TEST(test_mdbm_pool_parse);
   CPPUNIT_TEST(test_mdbm_pool_verify);
   CPPUNIT_TEST(test_mdbm_pool_pool_valid);
@@ -33,7 +33,7 @@ class YccmpTest: public CppUnit::TestFixture {
 
   CPPUNIT_TEST_SUITE_END();
 
-public:                                                                         
+public:
   void setUp (void) ;
   void tearDown (void) ;
 
@@ -85,12 +85,12 @@ void YccmpTest::test_mdbm_pool_parse() {
   size_str = "yjava=16,23";
   size = mdbm_pool_parse_pool_size(size_str);
   CPPUNIT_ASSERT(size == 23);
-  
+
   //size_str = "CppUnitTestRunner=15,25";
   size_str = "test_ccmp=15,25";
   size = mdbm_pool_parse_pool_size(size_str);
   CPPUNIT_ASSERT(size == 15);
-  
+
   size_str = "14,test_ccmp=22";
   size = mdbm_pool_parse_pool_size(size_str);
   CPPUNIT_ASSERT(size == 22);
@@ -125,7 +125,7 @@ void YccmpTest::test_mdbm_pool_verify() {
   values[3] = processes_or_threads_limit.rlim_cur * 2;
 
   mdbm_pool_verify_pool_size(values, 4);
-  
+
   CPPUNIT_ASSERT(values[0] == 2);
   CPPUNIT_ASSERT(values[1] == 0);
 
@@ -134,13 +134,13 @@ void YccmpTest::test_mdbm_pool_verify() {
     min_val = processes_or_threads_limit.rlim_cur * 3 / 4;
 
   CPPUNIT_ASSERT(values[2] == min_val);
-  CPPUNIT_ASSERT(values[3] == min_val);  
+  CPPUNIT_ASSERT(values[3] == min_val);
 }
 
 void YccmpTest::test_mdbm_pool_pool_valid() {
 
   MDBM *main_handle = mdbm_open(mdbm_name, MDBM_O_FSYNC, O_RDONLY, 4096, 0);
-  
+
   mdbm_pool_t *pool = mdbm_pool_create_pool(main_handle, 8);
   CPPUNIT_ASSERT(pool != NULL);
 
@@ -159,14 +159,14 @@ void YccmpTest::test_mdbm_pool_pool_valid() {
 
   ret = mdbm_pool_destroy_pool(pool);
   CPPUNIT_ASSERT(ret == 1);
-  
+
   mdbm_close(main_handle);
 }
 
 void YccmpTest::test_mdbm_pool_pool_invalid() {
 
   MDBM *main_handle = mdbm_open(mdbm_name, MDBM_O_FSYNC, O_RDONLY, 4096, 0);
-  
+
   mdbm_pool_t *pool = mdbm_pool_create_pool(main_handle, 0);
   CPPUNIT_ASSERT(pool == NULL);
 

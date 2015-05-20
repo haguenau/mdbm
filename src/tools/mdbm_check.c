@@ -98,7 +98,7 @@ main(int argc, char* argv[])
               }
               oflags |= lock_flags;
             }
-            if (oflags & MDBM_OPEN_NOLOCK) {            
+            if (oflags & MDBM_OPEN_NOLOCK) {
               lock = 0;
             }
             break;

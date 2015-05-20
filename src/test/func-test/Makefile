@@ -12,7 +12,7 @@ COMMON_SOURCES=              \
   CppUnitTestRunnerLocal.cc  \
   TestBase.cc
 
-   
+
 TESTS=                       \
   test_bs                    \
   test_copy_func             \
@@ -30,7 +30,7 @@ TESTS=                       \
 
 
 MYLIBS =  -L$(TOPDIR)/src/lib/$(OBJDIR) -lmdbm
-MYLIBS += -lpthread -lrt -lstdc++ -lcppunit 
+MYLIBS += -lpthread -lrt -lstdc++ -lcppunit
 LD_EXTRA += $(MYLIBS) -lcppunit $(LOCAL_LDADD)
 CXXFLAGS += -I$(TOPDIR)/src/lib
 
@@ -40,7 +40,7 @@ LD_LIB_PATH=LD_LIBRARY_PATH=$(TOPDIR)/src/lib/$(OBJDIR):$(LD_LIBRARY_PATH)
 TESTEXES= $(patsubst %, $(OBJDIR)/%, $(TESTS))
 
 # generate xml test results...
-RUN_ARGS= -tall -x $(1).xml 
+RUN_ARGS= -tall -x $(1).xml
 
 default-make-target: $(TESTEXES)
 

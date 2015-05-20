@@ -42,7 +42,7 @@ void pass_signal(int sig) {
         signal(sig, SIG_DFL);
         delayed_signals[i].installed = 0;
         handler_installed = 0;
-        kill(getpid(), sig); 
+        kill(getpid(), sig);
       } else if (delayed_signals[i].handler == SIG_IGN) {
         /* do nothing SIG_IGN == ignore */
       } else {
@@ -60,8 +60,8 @@ void delay_handler(int sig) {
     /* signals should be held... just make a note */
     for (i=0; i<sig_count; ++i) {
       if (sig == delayed_signals[i].sigval) {
-        ++delayed_signals[i].count; 
-      } 
+        ++delayed_signals[i].count;
+      }
     }
   } else {
     /* not holding signals now, pass it on directly */
@@ -70,10 +70,10 @@ void delay_handler(int sig) {
 }
 
 /*
-/// Called by the user to begin delaying signals, 
-/// (i.e. in a critical section to avoid shared memory being left in 
+/// Called by the user to begin delaying signals,
+/// (i.e. in a critical section to avoid shared memory being left in
 ///  an inconsistent state.)
-/// This function does one-time (normally) installation of a custom 
+/// This function does one-time (normally) installation of a custom
 /// signal handler. It also caches the existing signal handlers, so
 /// any user signal handlers MUST BE INSTALLED before it is first called.
 /// This is done for performance reasons, as installing and removing handlers
@@ -115,9 +115,9 @@ void resume_signals() {
   if (delay_nest == 0) {
     for (i=0; i<sig_count; ++i) {
       while (delayed_signals[i].count>0) {
-        --delayed_signals[i].count; 
+        --delayed_signals[i].count;
         pass_signal(delayed_signals[i].sigval);
-      } 
+      }
     }
   }
 }

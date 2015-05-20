@@ -77,7 +77,7 @@ main (int argc, char** argv)
     }
 
     if (mdbm_save(db,argv[optind+1],flags,0666,compression) < 0) {
-        fprintf(stderr,PREFIX "save failed: %s\n",strerror(errno));     
+        fprintf(stderr,PREFIX "save failed: %s\n",strerror(errno));
         return 2;
     }
 

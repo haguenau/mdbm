@@ -30,7 +30,7 @@ struct TlsEntry {
   MLockTlsMap entries;
 };
 
-// Thread-local-storage cleanup function 
+// Thread-local-storage cleanup function
 void tls_entry_destruct(void* entry) {
   if (!entry) { return; }
   TlsEntry* te = (TlsEntry*)entry;
@@ -54,7 +54,7 @@ private:
     static uint32_t  pid;                  // process id
     static TlsData    *atfork_installed;   // at_fork install guard
 public:
-    TlsData() { 
+    TlsData() {
       // Create a special pthread-key to lookup TLS data.
       // This is done once for a process/thread family.
       int ret = pthread_key_create(&key_, tls_entry_destruct);
@@ -63,9 +63,9 @@ public:
         exit(1);
       }
     }
-    ~TlsData() { 
+    ~TlsData() {
       // delete the tls lookup key on exit (not per-thread)
-      pthread_key_delete(key_); 
+      pthread_key_delete(key_);
     }
     // When forking, pthreads copies the TLS data, which will be incorrect (tid, etc)
     static void fork_reset() {
@@ -89,7 +89,7 @@ public:
       }
     }
     // Lookup the TLS data for this thread, creating a default if needed.
-    TlsEntry* getEntry() { 
+    TlsEntry* getEntry() {
       //AUTO_TSC("TlsData::get()");
       TlsEntry *te = (TlsEntry*)pthread_getspecific(key_);
       if (!te) {
@@ -130,7 +130,7 @@ public:
       return mte;
     }
     // Lookup the tid in our TLS data. gettid() is *far* too slow.
-    uint64_t get() { 
+    uint64_t get() {
       //AUTO_TSC("TlsData::get()");
       TlsEntry *te = getEntry();
       return te->tid;
@@ -138,7 +138,7 @@ public:
 };
 TlsData *TlsData::atfork_installed = NULL;
 uint32_t  TlsData::pid = 0;
- 
+
 
 // singleton Thread-local-storage for mlocks
 TlsData internal_thread_id;
@@ -170,7 +170,7 @@ inline void delete_tls_entry(MLock* locks) {
 
 
 
-PMutex::PMutex(PMutexRecord* inst, bool init, uint32_t idx) : rec(inst), index(idx), allocated(false) { 
+PMutex::PMutex(PMutexRecord* inst, bool init, uint32_t idx) : rec(inst), index(idx), allocated(false) {
   if (!inst) {
     allocated = true;
     rec = new PMutexRecord;
@@ -181,10 +181,10 @@ PMutex::PMutex(PMutexRecord* inst, bool init, uint32_t idx) : rec(inst), index(i
     }
   }
 }
-PMutex::~PMutex() { 
+PMutex::~PMutex() {
   DeInit();
 }
-int PMutex::GetRecordSize() { 
+int PMutex::GetRecordSize() {
   return sizeof(PMutexRecord);
 }
 #define statcase(s) case s : return #s;
@@ -265,9 +265,9 @@ bool PMutex::Init() {
   return true;
 }
 void PMutex::DeInit() {
-  if (allocated && rec) { 
+  if (allocated && rec) {
     pthread_mutex_destroy(&rec->mutex);
-    delete rec; 
+    delete rec;
   }
   allocated = false;
   rec = NULL;
@@ -342,7 +342,7 @@ inline int PMutex::Lock(bool blocking, owner_t tid) {
       mdbm_log(LOG_ERR, "Error (%d:%s) locking MutexPthread %p idx:%u\n", ret, strerror(ret), (void*)this, index);
       CHECKPOINTV("  Lock(%s) FAIL (%d)", blocking?"BLOCK":"ASYNC", ret);
       return -1;
-    } 
+    }
   }
 
   //{AUTO_TSC("lock_update()");
@@ -398,17 +398,17 @@ inline int PMutex::Unlock(owner_t tid) {
     }
     return ret;
   }
-  //CHECKPOINTV("  Unlock() RETURN (%d) any:%u pid:%u)", ret, rec->count, rec->owner); 
+  //CHECKPOINTV("  Unlock() RETURN (%d) any:%u pid:%u)", ret, rec->count, rec->owner);
   //return ret;
 }
 
 owner_t PMutex::GetOwnerId() { return rec->owner; }
 int PMutex::GetLockCount() { return rec->count; }
 int PMutex::GetLocalCount(owner_t tid) {
-  return (rec->owner==tid) ? rec->count : 0; 
+  return (rec->owner==tid) ? rec->count : 0;
 }
-int PMutex::GetLocalCount() { 
-  return (rec->owner==get_thread_id()) ? rec->count : 0; 
+int PMutex::GetLocalCount() {
+  return (rec->owner==get_thread_id()) ? rec->count : 0;
 }
 bool PMutex::IsValid() { return (rec!=NULL); }
 
@@ -466,7 +466,7 @@ int open_no_umask(const char* path, int flags, mode_t mode) {
   mode_t oldMask = umask(0); /* save umask */
   ret = open(path, flags, mode); /* create with mode (vs mode|~umask) */
   /* umask doesn't return errors, but it might affect errno */
-  err_save = errno; 
+  err_save = errno;
   umask(oldMask); /* restore umask */
   errno = err_save;
   return ret;
@@ -572,7 +572,7 @@ int PLockFile::Open(const char* fname, int regCount, int lockCount, bool &create
       // TODO could loop here for retries...
     }
   }
-  
+
   base = (uint8_t*)mmap(NULL, lockFileSize, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
   //fprintf(stderr, "@@@   Open() MMAP %d bytes (%d per) at %p  (end %p)\n", (int)lockFileSize, sMutex, base, base+lockFileSize-1);
   CHECKPOINTV("   Open() MMAP %d bytes (%d per) at %p  (end %p)", (int)lockFileSize, sMutex, base, base+lockFileSize-1);
@@ -598,7 +598,7 @@ int PLockFile::Open(const char* fname, int regCount, int lockCount, bool &create
           fname, hdr->mutexSize, sMutex);
       Close();
       //errno=ENOLCK;
-      // we need a special error code for things like Java to tell users 
+      // we need a special error code for things like Java to tell users
       // that they are mixing 32 and 64-bit access.
       errno=EXDEV;
       return -1;
@@ -627,7 +627,7 @@ int PLockFile::Open(const char* fname, int regCount, int lockCount, bool &create
       errno=ENOLCK;
       return -1;
     }
-    // 
+    //
     // TODO limited loop with delay for hdr->mutexInitialized < mutexCount
     //
     if (hdr->mutexCount != hdr->mutexInitialized) {
@@ -651,7 +651,7 @@ int PLockFile::Open(const char* fname, int regCount, int lockCount, bool &create
   locks = new PMutex*[lockCount];
   offset = sHeader+sReg*numRegs;
   for (i=0; i<lockCount; ++i) {
-    locks[i] = new PMutex((PMutexRecord*)(base+offset), init, i); 
+    locks[i] = new PMutex((PMutexRecord*)(base+offset), init, i);
     //fprintf(stderr, "************************ INITIALIZE (%d/%d) ************************\n", i, lockCount);
     if (!locks[i]->IsValid()) {
       CHECKPOINTV("******** INVALID (%d/%d) *********\n", i, lockCount);
@@ -793,7 +793,7 @@ int PLockFile::Expand(int newLockCount) {
     // initialize and increment header initialized count
     bool doInit = init && (unsigned)i>=hdr->mutexInitialized;
     //CHECKPOINTV("Expand Initializing mutex %d / %d at %p doInit:%d", i, (int)hdr->mutexInitialized, (newBase+offset), doInit);
-    newLocks[i] = new PMutex((PMutexRecord*)(newBase+offset), doInit, i); 
+    newLocks[i] = new PMutex((PMutexRecord*)(newBase+offset), doInit, i);
     if (!newLocks[i]->IsValid()) {
       ret = -1;
       err = ENODEV;
@@ -977,7 +977,7 @@ int MLock::Expand(int basic_locks, MLockType type, int lock_count) {
       parts = locks.GetNumLocks() - (base+1);
     mdbm_log(LOG_ERR, "MLock: Unchecked expand type:%s/%d, parts %d [%s]\n", MLockTypeToStr(lockType), lockType, parts, locks.filename);
     }
-  } else { 
+  } else {
     ret = locks.Expand(basic_locks+lock_count+1);
     if (!ret) {
       lockType = type;
@@ -1069,9 +1069,9 @@ int MLock::Unlock(int index) {
       // single is always "EXCLUSIVE"
       ret =  lockArray[base]->Unlock(tid);
       if (unlikely(ret)) { DumpLockState(stderr); }
-      else { 
+      else {
 //fprintf(stderr, "@@@ UNLOCK (ANY,SINGLE) DECREMENTING EXCL LOCK COUNTS\n");
-        --mte->exclCount; 
+        --mte->exclCount;
       }
       return ret;
     } else { // ((MLOCK_INDEX  == lockType) || (MLOCK_SHARED == lockType))
@@ -1085,7 +1085,7 @@ int MLock::Unlock(int index) {
       } else {
 //fprintf(stderr, "@@@ UNLOCK (ANY,MULTI-SEARCH) DECREMENTING EXCL LOCK COUNTS\n");
         AUTO_TSC("MLock::Unlock()-find-lock");
-        for (int i=-1; i<parts; ++i) { 
+        for (int i=-1; i<parts; ++i) {
            if (tid == lockArray[base+1+i]->GetOwnerId()) {
              //index = i;
              ret =  lockArray[base+1+i]->Unlock(tid);
@@ -1107,25 +1107,25 @@ int MLock::Unlock(int index) {
       AUTO_TSC("MLock::Unlock()-exclusive-single");
       ret =  lockArray[base]->Unlock(tid);
       if (unlikely(ret)) { DumpLockState(stderr); }
-      else { 
+      else {
 //fprintf(stderr, "@@@ UNLOCK (EXCL,SINGLE) DECREMENTING EXCL LOCK COUNTS\n");
-        --mte->exclCount; 
+        --mte->exclCount;
       }
     } else {
       // unlock all once, core lock last
       AUTO_TSC("MLock::Unlock()-exclusive");
       for (int i=0; i<parts; ++i) {
         ret =  lockArray[base+1+i]->Unlock(tid);
-        if (unlikely(ret)) { 
+        if (unlikely(ret)) {
           DumpLockState(stderr);
           return ret;
         }
       }
       ret =  lockArray[base]->Unlock(tid);
       if (unlikely(ret)) { DumpLockState(stderr); }
-      else { 
+      else {
 //fprintf(stderr, "@@@ UNLOCK (EXCL,MULTI) DECREMENTING EXCL LOCK COUNTS\n");
-        --mte->exclCount; 
+        --mte->exclCount;
       }
     }
   } else {
@@ -1196,7 +1196,7 @@ int MLock::Lock(int index, bool blocking) {
       // choose a deterministic pid-based offset first for speed
       index = tid % parts;  // based on the TID/PID
       int idx = index;
-      for (int i=0; i<parts; ++i) { 
+      for (int i=0; i<parts; ++i) {
         AUTO_TSC("MLock::Lock()-try-single");
         if (++idx >= parts) { idx = 0; }
         int ret = lockArray[base+1+idx]->Lock(false, tid);
@@ -1227,7 +1227,7 @@ int MLock::Lock(int index, bool blocking) {
     return -1;
   }
   if (index>MLOCK_EXCLUSIVE) {
-    //if (  (MLOCK_INDEX  == lockType) 
+    //if (  (MLOCK_INDEX  == lockType)
     //    ||(MLOCK_SHARED == lockType)) {
       // TODO should shared automatically iterate over locks?
       // acquire base first...
@@ -1239,7 +1239,7 @@ int MLock::Lock(int index, bool blocking) {
       if (likely(!ret)) {
         mte->lastLocked = index;
         ++mte->partCount;
-      } else if (bret == EOWNERDEAD || ret == EOWNERDEAD) { 
+      } else if (bret == EOWNERDEAD || ret == EOWNERDEAD) {
         mdbm_log(LOG_ERR, "EOWNERDEAD locking specific MLock index:%d, bret:%d ret:%d\n", index, bret, ret);
         mte->lastLocked = index;
         ++mte->partCount;
@@ -1260,7 +1260,7 @@ int MLock::Lock(int index, bool blocking) {
       //   avoids deadlock for multiple exclusive requestors
       bool basedied = false;
       bool partdied = false;
-      // TODO, if we own any other locks and fail on base, then we have to 
+      // TODO, if we own any other locks and fail on base, then we have to
       //   return a special code to let caller know we'll deadlock
       int ret = lockArray[base]->Lock(blocking, tid);
       if (unlikely(ret == EOWNERDEAD)) {
@@ -1341,7 +1341,7 @@ int MLock::Downgrade(int index, bool blocking) {
   if (MLOCK_SINGLE == lockType) {
     // Error
     return -1;
-  } 
+  }
   if (index<0) {
     if (MLOCK_INDEX == lockType) {
       return -1;
@@ -1351,7 +1351,7 @@ int MLock::Downgrade(int index, bool blocking) {
    index = parts-1;
   }
 
-  // verify ownership 
+  // verify ownership
   if (locks.locks[base]->GetLocalCount(tid)<=0) {
     errno = EPERM;
     return -1;
@@ -1375,7 +1375,7 @@ int MLock::ResetLock(int index) {
     errno = EINVAL;
     return -1;
   }
-  if (index<-1 || index>=parts 
+  if (index<-1 || index>=parts
       || (MLOCK_SINGLE  == lockType && index<0)){
     mdbm_log(LOG_ERR, "MLock: Invalid ResetLock index: %d / %d\n", index, parts);
     errno = ENOENT;
@@ -1555,9 +1555,9 @@ void MLock::DumpLockState(FILE* file) {
 // struct mlock_struct {
 //   MLock inner;
 // };
-// 
+//
 // mlock_t* mlock_open(const char* filename, int basic_locks, MLockType type, int lock_count) {
-// 
+//
 //   mlock_t *m = new mlock_t;
 //   int ret = m->inner.Open(filename, basic_locks, type, lock_count);
 //   if (0==ret) {
@@ -1569,7 +1569,7 @@ void MLock::DumpLockState(FILE* file) {
 //   return NULL;
 // }
 // mlock_t* mlock_open_mod(const char* filename, int basic_locks, MLockType type, int lock_count, int mode) {
-// 
+//
 //   mlock_t *m = new mlock_t;
 //   int ret = m->inner.Open(filename, basic_locks, type, lock_count, mode);
 //   if (0==ret) {
@@ -1580,7 +1580,7 @@ void MLock::DumpLockState(FILE* file) {
 //   delete m;
 //   return NULL;
 // }
-// 
+//
 // #ifdef DYNAMIC_LOCK_EXPANSION
 // int mlock_expand(mlock_t* m, int basic_locks, MLockType type, int lock_count) {
 //   if (!m) {
@@ -1590,7 +1590,7 @@ void MLock::DumpLockState(FILE* file) {
 //   return m->inner.Expand(basic_locks, type, lock_count);
 // }
 // #endif //DYNAMIC_LOCK_EXPANSION
-// 
+//
 // int mlock_close(mlock_t* m) {
 //   if (!m) {
 //     errno = ENOENT;
@@ -1606,7 +1606,7 @@ void MLock::DumpLockState(FILE* file) {
 // int mlock_get_num_locks(mlock_t* m) {
 //   return m->inner.GetNumLocks();
 // }
-// 
+//
 // void mlock_dump_state(mlock_t* m, FILE* file) {
 //   m->inner.DumpLockState();
 // }
@@ -1615,8 +1615,8 @@ void MLock::DumpLockState(FILE* file) {
 //   return m->inner.ResetAllLocks();
 // }
 // #endif
-// 
-// 
+//
+//
 // int mlock_base_unlock(mlock_t* m, int index) {
 //   return m->inner.UnlockBase(index);
 // }
@@ -1637,7 +1637,7 @@ void MLock::DumpLockState(FILE* file) {
 // int mlock_base_get_local_count(mlock_t* m, int index) {
 //   return m->inner.GetBaseLocalCount(index);
 // }
-// 
+//
 // int mlock_unlock(mlock_t* m, int index) {
 //   return m->inner.Unlock(index);
 // }
@@ -1736,14 +1736,14 @@ void PthrLock::close() {
  * 'dbname' is expected to be an absolute path.
  * On success, buffer contains the lock file name associated with dbname
  * and returns the lock filename size in bytes.
- * If maxlen is too small, lockname is unchanged and the (negative) required 
+ * If maxlen is too small, lockname is unchanged and the (negative) required
  * length is returned.
  * Returns 0 if dbname is invalid.
  */
 int PthrLock::getFilename(const char* dbname, char* lockname, int maxlen) {
   const char* prefix = "/tmp/.mlock-named";
   const char* suffix = "._int_";
-  int plen, slen, dblen, llen; 
+  int plen, slen, dblen, llen;
   if (!dbname || !dbname[0] || dbname[0]!='/') {
     mdbm_logerror(LOG_ERR, 0, "%s: invalid db name in get_lockfile_name()", dbname);
     return 0;
@@ -1791,10 +1791,10 @@ int PthrLock::lock(int type, int async, int part, int &need_check, int &upgrade)
       return -1;
     } else if (type == MLOCK_INDEX) {
     //fprintf(stderr, "++++ PthrLock::lock Part(%d)\n", part);
-      ret = locks.Lock(part, async); 
+      ret = locks.Lock(part, async);
     } else if (type == MLOCK_SHARED) {
     //fprintf(stderr, "++++ PthrLock::lock Shared\n");
-      ret = locks.Lock(MLOCK_ANY, async); 
+      ret = locks.Lock(MLOCK_ANY, async);
     }
   }
   if (ret == EOWNERDEAD) {
@@ -1821,12 +1821,12 @@ int PthrLock::unlock(int type) {
       return -1;
     } else if (type == MLOCK_INDEX) {
       // TODO FIXME, is this right?
-      //ret = locks.Unlock(type); 
+      //ret = locks.Unlock(type);
     //fprintf(stderr, "---- PthrLock::unlock Part(ANY)\n");
-      ret = locks.Unlock(MLOCK_ANY); 
+      ret = locks.Unlock(MLOCK_ANY);
     } else if (type == MLOCK_SHARED) {
     //fprintf(stderr, "---- PthrLock::unlock Share(ANY)\n");
-      ret = locks.Unlock(MLOCK_ANY); 
+      ret = locks.Unlock(MLOCK_ANY);
     } else { // shouldn't happen
     //fprintf(stderr, "---- PthrLock::unlock BORKED %d vs %d \n", type, hasType);
     }
@@ -1842,9 +1842,9 @@ int PthrLock::getHeldCount(int type, bool self) {
     switch (type) {
       case MLOCK_INTERNAL  : return locks.GetBaseLocalCount(0);
       case MLOCK_EXCLUSIVE : return locks.GetLocalCount(-1);
-      case MLOCK_SHARED    : 
+      case MLOCK_SHARED    :
           return (type==hasType) ? locks.GetLocalCountTotal()-locks.GetLocalCount(-1) : 0;
-      case MLOCK_INDEX     : 
+      case MLOCK_INDEX     :
           return (type==hasType) ? locks.GetLocalCountTotal()-locks.GetLocalCount(-1) : 0;
       default: break;
     };
@@ -1852,9 +1852,9 @@ int PthrLock::getHeldCount(int type, bool self) {
     switch (type) {
       case MLOCK_INTERNAL  : return locks.GetBaseLockCount(0);
       case MLOCK_EXCLUSIVE : return locks.GetLockCount(-1);
-      case MLOCK_SHARED    : 
+      case MLOCK_SHARED    :
           return (type==hasType) ? locks.GetLockCountTotal()-locks.GetLockCount(-1) : 0;
-      case MLOCK_INDEX     : 
+      case MLOCK_INDEX     :
           return (type==hasType) ? locks.GetLockCountTotal()-locks.GetLockCount(-1) : 0;
       default: break;
     };
@@ -1911,7 +1911,7 @@ int mkdir_no_umask(char* path, mode_t mode) {
   mode_t oldMask = umask(0); /* save umask */
   ret = mkdir(path, mode); /* create with mode (vs mode|~umask) */
   /* umask doesn't return errors, but it might affect errno */
-  err_save = errno; 
+  err_save = errno;
   umask(oldMask); /* restore umask */
   errno = err_save;
   return ret;
@@ -1920,7 +1920,7 @@ int mkdir_no_umask(char* path, mode_t mode) {
 
 /* Recursively create directories as needed.
  * Assumes last path component should be a directory.
- * returns 0 on success. 
+ * returns 0 on success.
  */
 int ensure_lock_path(char* path, int skiplast) {
   int ret = -1;
@@ -2014,7 +2014,7 @@ int PthrLock::open(const char* dbname, int flags, MLockType type, int lock_count
         db_group = st.st_gid;
         db_owner = st.st_uid;
       }
-      // [BUG 5354707] Lockfiles inherently require modification to acquire a lock, 
+      // [BUG 5354707] Lockfiles inherently require modification to acquire a lock,
       //   even to acquire a read-lock. So the lockfile must have write permission
       //   for each entity that has read-permission on the mdbm file.
       if (mode & S_IRUSR) {
@@ -2119,19 +2119,19 @@ int PthrLock::open(const char* dbname, int flags, MLockType type, int lock_count
 //         errno = EINVAL;
 //         return -1;
 //     }
-// 
+//
 // #  ifndef DYNAMIC_LOCK_EXPANSION
 //     /* resetting the locking mode isn't allowed... */
 //     mdbm_logerror(LOG_ERR,0,"%s:  mdbm_lock_reset() not supported",dbname);
 //     errno = ENOTSUP;
 //     return -1;
-// 
+//
 // #  else /*DYNAMIC_LOCK_EXPANSION */
 //     int ret = 0, need_check = 0;
 //     struct mdbm_locks *db_locks = NULL;
 //     /*NOTE("RESETTING LOCKFILE!"); */
 //     /*fprintf(stderr, "RESETTING LOCKFILE! [%s]\n", dbname); */
-//  
+//
 //     /*unlink(dbname); */
 //     /*char pathname[MAXPATHLEN+1]; */
 //     /* FIXME It's unclear if this should reset the db internal lock, or all... */
@@ -2198,9 +2198,9 @@ typedef struct p_lock_hdr_s {
 
 void dump_header(p_lock_hdr* hdr, const char* fname) {
   fprintf(stdout, "[%s] ver:%u, mtxSz:%u, regs:%u, mtxs:%u, mtxInit:%u\n", fname,
-    hdr->version, 
-    hdr->mutexSize, 
-    hdr->registerCount, 
+    hdr->version,
+    hdr->mutexSize,
+    hdr->registerCount,
     hdr->mutexCount,
     hdr->mutexInitialized
   );
@@ -2222,7 +2222,7 @@ void dump_mutexes(p_mutex_record* mutex, int count, int all) {
                       "    :: lock:%d, count:%u, owner:%d,"
                       " nusr:%u, kind:%i, spins:%d p:%p n:%p\n",
           i, cur->owner, cur->count,
-          m->lock, m->count, m->owner, 
+          m->lock, m->count, m->owner,
           m->nusers, m->kind, m->spins, (void*)m->list.prev, (void*)m->list.next
       );
     }
@@ -2241,7 +2241,7 @@ void dump_lock_file(const char* fname, int all) {
   if (fd<0) {
     fprintf(stderr, "Error opening file [%s]\n", fname);
     return;
-  } 
+  }
 
   if (fstat(fd, &lockStat)) {
     fprintf(stderr, "Error stat-ing file [%s]\n", fname);
@@ -2254,7 +2254,7 @@ void dump_lock_file(const char* fname, int all) {
     fprintf(stderr, "Error mmapping file [%s]\n", fname);
     close(fd);
     return;
-  } 
+  }
   hdr = (p_lock_hdr*)base;
   dump_header(hdr, fname);
   cur = base + sizeof(p_lock_hdr);

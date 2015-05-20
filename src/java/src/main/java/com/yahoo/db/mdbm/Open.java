@@ -4,9 +4,9 @@ package com.yahoo.db.mdbm;
 
 /**
  * Flags that can be passed to mdbm_open
- * 
+ *
  * @author areese
- * 
+ *
  */
 public class Open {
 
@@ -31,7 +31,7 @@ public class Open {
     public static final int MDBM_O_RDWR = 0x00000002;
 
     /**
-     * 
+     *
      */
     public static final int MDBM_O_ACCMODE = (MDBM_O_RDONLY | MDBM_O_WRONLY | MDBM_O_RDWR);
 

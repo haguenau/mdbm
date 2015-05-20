@@ -47,7 +47,7 @@ void post_open_callback(MDBM *db) { }
 using namespace std;
 
 int
-benchmarkExisting(const char *filename, double percentWrites, int lockmode, 
+benchmarkExisting(const char *filename, double percentWrites, int lockmode,
                   const char *outputfile, uint opCount, int verbose)
 {
     if (opCount) {
@@ -57,7 +57,7 @@ benchmarkExisting(const char *filename, double percentWrites, int lockmode,
     FILE *ofile = stdout;
     if ((outputfile != NULL) && outputfile[0]) {
         ofile = fopen(outputfile, "w+");
-    } 
+    }
 
     int flags = MDBM_O_RDONLY;
     if (percentWrites > 0.0) {
@@ -170,9 +170,9 @@ benchmarkExisting(const char *filename, double percentWrites, int lockmode,
             bufd.dsize = MAX(MaxValueSize, (uint) bufd.dsize);
             if (ret < 0) {
                 char *ptr = bufd.dptr +
-                            snprintf(bufd.dptr, bufd.dsize, 
+                            snprintf(bufd.dptr, bufd.dsize,
                                     "BENCH ERROR: Failed to %s key #%d (len=%d): ",
-                                    (doWrite ? "write" : "fetch"), j, key.dsize); 
+                                    (doWrite ? "write" : "fetch"), j, key.dsize);
                 for (int k = 0; k < key.dsize; ++k) {
                     if (!key.dptr[k]) {
                         *ptr++ = '\\';
@@ -189,15 +189,15 @@ benchmarkExisting(const char *filename, double percentWrites, int lockmode,
         }
         writer.dropData(keys);
         if ( unlink(datafiles[i].c_str()) != 0) {
-            fprintf(ofile, "BENCH: Failed to remove data file %s\n", datafiles[i].c_str()); 
+            fprintf(ofile, "BENCH: Failed to remove data file %s\n", datafiles[i].c_str());
         }
     }
 
     if (verbose) {
         endt = get_time_usec();
-        fprintf(ofile, "BENCH: Usec delta= %llu #reads= %u #writes= %u Tfetch= %llu Twrite=%llu\n", 
-                (long long unsigned)(endt - startt), readcount, writecount, 
-                (long long unsigned)totalTimeFetch, (long long unsigned)totalTimeWrite); 
+        fprintf(ofile, "BENCH: Usec delta= %llu #reads= %u #writes= %u Tfetch= %llu Twrite=%llu\n",
+                (long long unsigned)(endt - startt), readcount, writecount,
+                (long long unsigned)totalTimeFetch, (long long unsigned)totalTimeWrite);
     }
 
     free(bufd.dptr);
@@ -205,17 +205,17 @@ benchmarkExisting(const char *filename, double percentWrites, int lockmode,
     // Generate output similar to mdbm_bench
     double tmp = readcount * 1000000.0;
     uint32_t fetchesPerSec = lround(totalTimeFetch ? (tmp / totalTimeFetch) : 0);
-    tmp = writecount * 1000000.0; 
+    tmp = writecount * 1000000.0;
     uint32_t writesPerSec = lround(totalTimeWrite ? (tmp / totalTimeWrite) : 0);
 
-    fprintf(ofile, 
+    fprintf(ofile,
             "nproc  fetch/s      msec  store/s      msec    del/s      msec  getpg/s      msec\n");
     fprintf(ofile, "    1 %8u %9.5f %8u %9.3f %8u %9.3f %8u %9.3f\n", fetchesPerSec, 0.0,
-            writesPerSec, 0.0, 0, 0.0, 0, 0.0 ); 
+            writesPerSec, 0.0, 0, 0.0, 0, 0.0 );
     if ((outputfile != NULL) && outputfile[0] && (fclose(ofile) != 0)) {
         if (ofile == NULL)
-	   return 0; 
-        fprintf(stderr, "BENCH: Failed to close output file\n"); 
+	   return 0;
+        fprintf(stderr, "BENCH: Failed to close output file\n");
     }
     return 0;
 }

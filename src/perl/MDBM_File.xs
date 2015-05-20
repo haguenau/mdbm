@@ -210,7 +210,7 @@ prune_function(MDBM_File db, datum k, datum xv, void *param)
 
   PUTBACK;
   FREETMPS;
-  LEAVE; 
+  LEAVE;
 
   return ret;
 }
@@ -1500,10 +1500,10 @@ mdbm_NEXTKEY(MDBM_File db, datum /*key*/)
 datum
 mdbm_nextkey_r(MDBM_File db, MDBM_ITER* iter)
 
-int     
+int
 mdbm_pre_split(MDBM_File db, mdbm_ubig_t n)
 
-int     
+int
 mdbm_set_alignment(MDBM_File db, int amask)
 
 
@@ -1524,7 +1524,7 @@ mdbm_prune(MDBM_File db, SV *prune, char *param)
     CODE:
         if (SvTYPE(SvRV(prune)) == SVt_PVCV) {
           update_perl_callback(db, ST(0), NULL, newSVsv(prune));
-          mdbm_prune(db, &prune_function, (void *)param); 
+          mdbm_prune(db, &prune_function, (void *)param);
         }
 
 void
@@ -1533,43 +1533,43 @@ mdbm_compress_tree(MDBM_File db)
 void
 mdbm_stat_header(MDBM_File db)
 
-void    
+void
 mdbm_stat_all_page(MDBM_File db)
 
-void    
+void
 mdbm_chk_all_page(MDBM_File db)
 
-void    
+void
 mdbm_dump_all_page(MDBM_File db)
 
-void    
+void
 mdbm_sync(MDBM_File db)
 
-void    
+void
 mdbm_fsync(MDBM_File db)
 
-void    
+void
 mdbm_close(MDBM_File db)
 
-void    
+void
 mdbm_close_fd(MDBM_File db)
 
-void    
+void
 mdbm_truncate(MDBM_File db)
 
-int     
+int
 mdbm_lock(MDBM_File db)
 
-int    
+int
 mdbm_trylock(MDBM_File db)
 
-int     
+int
 mdbm_islocked(MDBM_File db)
 
-int     
+int
 mdbm_isowned(MDBM_File db)
 
-int     
+int
 mdbm_unlock(MDBM_File db)
 
 
@@ -1577,7 +1577,7 @@ int
 mdbm_plock(MDBM_File db, datum key, int flags)
     CODE:
         RETVAL = mdbm_plock(db, &key, flags);
-        /*NOTE: was: XSprePUSH; PUSHi((IV)RETVAL); 
+        /*NOTE: was: XSprePUSH; PUSHi((IV)RETVAL);
           instead of OUPUT section */
     OUTPUT:
         RETVAL
@@ -1587,7 +1587,7 @@ int
 mdbm_tryplock(MDBM_File db, datum key, int flags)
     CODE:
         RETVAL = mdbm_tryplock(db, &key, flags);
-        /*NOTE: was: XSprePUSH; PUSHi((IV)RETVAL); 
+        /*NOTE: was: XSprePUSH; PUSHi((IV)RETVAL);
           instead of OUPUT section */
     OUTPUT:
         RETVAL
@@ -1596,12 +1596,12 @@ int
 mdbm_punlock(MDBM_File db, datum key, int flags)
     CODE:
         RETVAL = mdbm_punlock(db, &key, flags);
-        /*NOTE: was: XSprePUSH; PUSHi((IV)RETVAL); 
+        /*NOTE: was: XSprePUSH; PUSHi((IV)RETVAL);
           instead of OUPUT section */
     OUTPUT:
         RETVAL
 
-int     
+int
 mdbm_sethash(MDBM_File db, int number)
 
 int
@@ -1643,7 +1643,7 @@ mdbm_getHashId(db)
          RETVAL = ptrValue;
     OUTPUT:
         RETVAL
-    
+
 
 PROTOTYPES: ENABLE
 
@@ -1737,7 +1737,7 @@ constant(sv)
         }
 
 
-# Implement the iterators for all the _r methods 
+# Implement the iterators for all the _r methods
 MODULE = MDBM_File	PACKAGE = MDBM_Iter	PREFIX = mdbm_iter_
 
 MDBM_ITER*

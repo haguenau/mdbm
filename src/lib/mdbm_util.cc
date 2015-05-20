@@ -80,8 +80,8 @@ mdbm_util_get_size (const char* arg, int default_multiplier) {
 }
 
 
-int 
-mdbm_util_lockstr_to_flags(const char* lock_string, int *lock_flags) 
+int
+mdbm_util_lockstr_to_flags(const char* lock_string, int *lock_flags)
 {
     if (lock_string) {
         if (strcasecmp(lock_string, "exclusive") == 0) {
@@ -240,10 +240,10 @@ realloc_if_needed(char **bufptr, uint32_t *bufsize, uint32_t buf_offset, uint32_
 // If realloc()-ed, then update bufsize.  buf_offset points to the offset where to start writing
 // the object.  Sizes are 32 bit to make sure users write the data to external storage before
 // we reach 4GB, due to the performance costs of calling realloc so many times.
-*/ 
+*/
 
 int
-mdbm_dbdump_add_record(kvpair kv, uint32_t *datasize, 
+mdbm_dbdump_add_record(kvpair kv, uint32_t *datasize,
                        char **bufptr, uint32_t *bufsize, uint32_t buf_offset)
 {
     uint32_t ksize;
@@ -272,7 +272,7 @@ mdbm_cdbdump_to_file(kvpair kv, FILE *fp)
     if ((ret = fprintf(fp, "+%d,%d:", kv.key.dsize, kv.val.dsize)) < 0) {
         return ret;
     }
-        
+
     if (fwrite(kv.key.dptr, kv.key.dsize, 1, fp) <= 0) {
         errno = EBADF;
         return -1;
@@ -301,7 +301,7 @@ mdbm_cdbdump_trailer_and_close(FILE *fp)
 }
 
 int
-mdbm_cdbdump_add_record(kvpair kv, uint32_t *datasize, 
+mdbm_cdbdump_add_record(kvpair kv, uint32_t *datasize,
                         char **bufptr, uint32_t *bufsize, uint32_t buf_offset)
 {
     char *cur;
@@ -329,7 +329,7 @@ mdbm_cdbdump_add_record(kvpair kv, uint32_t *datasize,
 //     MDBM *db - The open MDBM handle
 //     FILE *fp - The file into which the DBdump header should be written to
 int
-mdbm_dbdump_export_header(MDBM *db, FILE *fp) 
+mdbm_dbdump_export_header(MDBM *db, FILE *fp)
 {
     if (fp == NULL) {
         return -1;
@@ -344,7 +344,7 @@ mdbm_dbdump_export_header(MDBM *db, FILE *fp)
 }
 
 // An print msg if an error occurred while writing
-int 
+int
 print_write_err(const char *filename)
 {
     fprintf(stderr, "%s: unable to create: %s\n", filename, strerror(errno));
@@ -489,7 +489,7 @@ lock_and_store(MDBM *db, datum key, datum val, int store_flag)
     case -1:
         fprintf(stderr, "failed writing to %s, store_flag=%d, errno=%s\n",
                 mdbm_get_filename(db), store_flag, strerror(errno));
-                
+
         break;
 
     case 1:

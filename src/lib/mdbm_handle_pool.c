@@ -42,10 +42,10 @@ struct mdbm_pool_locks_s {
   /* Duplication is treated as a special case of the many readers,
    * one writer problem. The need to grow the pool is treated as a
    * write use, holding a handle is treated as a read use.
-   
-   IMPORTANT: duplication_lock must always be acquired before transfer_handle_lock .   
+
+   IMPORTANT: duplication_lock must always be acquired before transfer_handle_lock .
   */
-  
+
   pthread_rwlock_t duplication_lock;
   pthread_mutex_t transfer_handle_lock;
   pthread_cond_t handle_cond;
@@ -57,15 +57,15 @@ typedef struct mdbm_pool_locks_s mdbm_pool_locks_t;
 
 struct mdbm_pool_s {
   MDBM *original_handle;
-  
+
   /* Each thread which fetches handles from this pool will get a
    * copy of one of these handles. */
-  
+
   mdbm_pool_list_t dup_handle_stack;
   mdbm_pool_list_t reserve_handle_stack;
-  
+
   mdbm_pool_locks_t *locks;
-  
+
   /* This is the total number of handles. */
   int size;
 };
@@ -151,14 +151,14 @@ static int setup_pool(mdbm_pool_t *pool, int set_size) {
       pthread_rwlock_unlock(&pool->locks->duplication_lock);
       return 0;
   }
-  
+
   for (size = 0; size < set_size; ++size) {
       MDBM *dup_handle = mdbm_dup_handle(pool->original_handle, 0);
       if (!dup_handle) {
 	  mdbm_logerror(LOG_ERR, 0, "mdbm_dup_handle returned null."
 	                "%s stopped increasing pool size at %d when %d was requested.",
 		       __func__, size, set_size);
-	  
+
 	  /* we are going to back off half of the opened handles
 	   * to release resources */
 
@@ -178,10 +178,10 @@ static int setup_pool(mdbm_pool_t *pool, int set_size) {
 	      mdbm_logerror(LOG_ERR, 0, "Failed to calloc memory for new duplicated handle."
 	                    " %s stopped increasing pool size at %d when %d was requested.",
 			   __func__, size, set_size);
-	      
+
 	      /* we are going to back off half of the opened handles
 	       * to release resources */
-	      
+
 	      mdbm_close(dup_handle);
 
 	      if (size > 1) {
@@ -194,7 +194,7 @@ static int setup_pool(mdbm_pool_t *pool, int set_size) {
           }
       }
   }
-    
+
   pthread_mutex_unlock(&pool->locks->transfer_handle_lock);
   pthread_rwlock_unlock(&pool->locks->duplication_lock);
 
@@ -305,7 +305,7 @@ static int wait_for_available_handle(mdbm_pool_t *pool) {
   to.tv_sec = usec / 1000000;
   to.tv_nsec = (usec % 1000000) * 1000;
 
-  ret = pthread_cond_timedwait(&pool->locks->handle_cond, 
+  ret = pthread_cond_timedwait(&pool->locks->handle_cond,
 			       &pool->locks->transfer_handle_lock, &to);
 
   return (ret == 0 || ret == ETIMEDOUT) ? 0 : -1;
@@ -349,7 +349,7 @@ MDBM *mdbm_pool_acquire_handle(mdbm_pool_t *pool) {
   if (pthread_mutex_unlock(&pool->locks->transfer_handle_lock) != 0) {
     LOG_LOCK_RELEASE_FAILURE("transfer_handle_lock", "safe exit from acquire_handle.");
   }
-  
+
   return handle;
 }
 
@@ -367,7 +367,7 @@ int mdbm_pool_release_handle(mdbm_pool_t *pool, MDBM *db) {
       mdbm_close(db);
       return 0;
   }
-  
+
   if (pool->reserve_handle_stack.lh_first) {
       reserve_entry = pool->reserve_handle_stack.lh_first;
       LIST_REMOVE(reserve_entry, entries);
@@ -393,11 +393,11 @@ int mdbm_pool_release_handle(mdbm_pool_t *pool, MDBM *db) {
   if (pthread_mutex_unlock(&pool->locks->transfer_handle_lock) != 0) {
     LOG_LOCK_RELEASE_FAILURE("transfer_handle_lock","safe exit from release_handle");
   }
-  
+
   if (pthread_rwlock_unlock(&pool->locks->duplication_lock) != 0) {
     LOG_LOCK_RELEASE_FAILURE("duplication_lock", "safe exit from release_handle");
   }
-    
+
   return ret;
 }
 
@@ -412,7 +412,7 @@ MDBM *mdbm_pool_acquire_excl_handle(mdbm_pool_t *pool) {
   }
 
   /* acquire_read_write_handle should never need to muck with the
-   * handle stack, and pthread_rwlock_wrlock() will block until all 
+   * handle stack, and pthread_rwlock_wrlock() will block until all
    * the readers are done, so there's no need to acquire transfer_handle_lock.
    */
 
@@ -467,20 +467,20 @@ int mdbm_pool_parse_pool_size(const char *value) {
   if (readlink("/proc/self/exe", self_path, sizeof(self_path)) == -1) {
     return 0;
   }
-  
+
   if ((self_name = basename(self_path)) == NULL) {
     return 0;
   }
-  
+
   if ((data = strdup(value)) == NULL) {
     return 0;
   }
-  
+
   token = strtok_r(data, ",", &token_next);
   while (token) {
       /* the format should be name=value. If it only contains
-       * value then we'll use it as default for all apps 
-       * if multiple name=value pairs specified, then first 
+       * value then we'll use it as default for all apps
+       * if multiple name=value pairs specified, then first
        * one wins, but if we have multiple values specified
        * then last one wins */
 
@@ -494,10 +494,10 @@ int mdbm_pool_parse_pool_size(const char *value) {
 	      break;
           }
       }
-      
+
       token = strtok_r(NULL, ",", &token_next);
   }
-  
+
   free(data);
   if (ret_value < 0) {
     return def_value;
@@ -514,7 +514,7 @@ void mdbm_pool_verify_pool_size(int *vals, int count) {
   struct rlimit open_files_limit = {0,0};
   struct rlimit processes_or_threads_limit = {0,0};
 
-  /* if we have negative values then reset them 
+  /* if we have negative values then reset them
    * and keep track of if we need to process
    * anything at all (only for positive values) */
 
@@ -525,12 +525,12 @@ void mdbm_pool_verify_pool_size(int *vals, int count) {
 	vals[i] = 0;
       }
   }
-  
+
   if (bCheck == 0) {
     return;
   }
 
-  /* only process our check if we have successful response 
+  /* only process our check if we have successful response
    * from both of our limits */
 
   if (getrlimit(RLIMIT_NOFILE, &open_files_limit) != 0) {
@@ -540,12 +540,12 @@ void mdbm_pool_verify_pool_size(int *vals, int count) {
   if (getrlimit(RLIMIT_NPROC, &processes_or_threads_limit) != 0) {
     return;
   }
-      
+
   /* reset the max size to be 3/4 of the configured system max */
-  
+
   for (i = 0; i < count; i++) {
       if (vals[i] <= 0) { continue; }
-      
+
       if (open_files_limit.rlim_cur != RLIM_INFINITY) {
 	  current_size = vals[i] * 2;
 	  if (open_files_limit.rlim_cur < current_size) {

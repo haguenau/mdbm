@@ -6,11 +6,11 @@ import java.util.Arrays;
 
 /**
  * Class for wrapping an mdbm datum structure.
- * 
+ *
  * Datums are not thread safe.
- * 
+ *
  * @author areese
- * 
+ *
  */
 // ignore that we allow direct access to the buffer we wrap.
 @SuppressWarnings({"PMD. EI_EXPOSE_REP", "EI_EXPOSE_REP2"})

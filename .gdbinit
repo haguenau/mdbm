@@ -27,7 +27,7 @@ show follow-fork-mode
 
 # After modules have been loaded, breakpoints may be set in them.
 #break main
-#run 
+#run
 
 # Delete the breakpoint, so a subsequent `run' won't stop at it.
 #delete 1
@@ -38,7 +38,7 @@ show follow-fork-mode
 # info threads -- show threads
 # threads apply all backtrace -- backtrace for all threads
 
-# 
+#
 # Local variables:
 # eval: (if (fboundp 'shell-script-mode) (shell-script-mode))
 # eval: (auto-fill-mode 0)

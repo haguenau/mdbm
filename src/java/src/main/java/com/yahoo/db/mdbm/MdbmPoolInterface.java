@@ -9,15 +9,15 @@ import com.yahoo.db.mdbm.exceptions.MdbmInvalidStateException;
 /**
  * This class maintains a fixed size pool of mdbm handles that can be used. This is the preferred way to use mdbm from
  * more than one thread.
- * 
+ *
  * @author areese
- * 
+ *
  */
 public interface MdbmPoolInterface extends Closeable {
 
     /**
      * get an mdbm handle from the pool, blocking if required.
-     * 
+     *
      * @return mdbm handle from the pool.
      * @throws MdbmInvalidStateException
      */
@@ -25,7 +25,7 @@ public interface MdbmPoolInterface extends Closeable {
 
     /**
      * return an mdbm handle to the pool
-     * 
+     *
      * @param mdbm handle to return
      * @throws MdbmInvalidStateException
      */
@@ -45,7 +45,7 @@ public interface MdbmPoolInterface extends Closeable {
 
     /**
      * Validate the internal state of the Mdbm Object
-     * 
+     *
      * @throws MdbmInvalidStateException
      */
     void validate() throws MdbmInvalidStateException;

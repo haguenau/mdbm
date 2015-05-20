@@ -24,7 +24,7 @@ int main(int argc, char **argv)
         perror("Unable to create database");
         exit(2);
     }
-    
+
 #define COMMON_KEY_ONE "mykey\0"
 #define COMMON_KEY_TWO "fooba\0"
 

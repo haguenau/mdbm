@@ -76,7 +76,7 @@ main (int argc, char** argv)
     for_each(db.begin(),db.end(),print<Db::value_type>());
     printf("lock status: %s\n",db.islocked() ? "locked" : "unlocked");
     db.close();
-    
+
     Db1 db1;
     char buf[8];
 

@@ -38,7 +38,7 @@ int get_lock_flags(const char* dbname, int defaults) {
     ++count;
   }
 
-  if (!count) { 
+  if (!count) {
     //fprintf(stderr, "Found  NO LOCKS; %s\n", dbname);
     return defaults; // FIXME is this right?
   }
@@ -124,7 +124,7 @@ void mdbm_lock_and_load(void) {
     }
 
     // register PLock plugin explicitly, as it's not thread-safe to to rely on
-    //   REGISTER_MDBM_LOCK_PLUGIN 
+    //   REGISTER_MDBM_LOCK_PLUGIN
     mdbm_add_lock_plugin("plock", &pthread_lock_creator);
 }
 
@@ -214,7 +214,7 @@ int db_is_locked(MDBM* db) {
   if (!locks) { // MDBM_OPEN_NOLOCK
     return 0;
   }
-  return locks->getHeldCount(MLOCK_EXCLUSIVE, false) > 0; 
+  return locks->getHeldCount(MLOCK_EXCLUSIVE, false) > 0;
 }
 
 uint32_t db_get_lockmode(MDBM *db) {
@@ -461,7 +461,7 @@ do_lock_x(MDBM* db, int pageno, int nonblock, int check)
         int do_check = 0; /* If an integrity check needs to be done. */
         int upgraded = 0; /* If the lock was implicitly upgraded (prev EXCL owner died). */
         int part_num = -1;
-        //fprintf(stderr, "@@@ do_lock_x pid:%d tid:%d, excl_nest:%d part_nest:%d part_count:%d pageno:%d\n", getpid(), gettid(), exclusive_nest, part_nest, part_count, pageno); 
+        //fprintf(stderr, "@@@ do_lock_x pid:%d tid:%d, excl_nest:%d part_nest:%d part_count:%d pageno:%d\n", getpid(), gettid(), exclusive_nest, part_nest, part_count, pageno);
         /*fprintf(stderr, "do_lock_x, part_count:%d\n", part_count); */
         if (part_count > 1) { /* shared/indexed locking (vs single-lock) */
             if (pageno == MDBM_LOCK_EXCLUSIVE || pageno == MDBM_LOCK_SHARED) {
@@ -473,7 +473,7 @@ do_lock_x(MDBM* db, int pageno, int nonblock, int check)
 
             if (pageno == MDBM_LOCK_EXCLUSIVE || exclusive_nest > 0) {
                 if (!exclusive_nest && part_nest>0) {
-                    //fprintf(stderr, "@@@ do_lock_x-upgrade pid:%d tid:%d, \n", getpid(), gettid()); 
+                    //fprintf(stderr, "@@@ do_lock_x-upgrade pid:%d tid:%d, \n", getpid(), gettid());
                     /*NOTE("Upgrade(TRY)"); */
                     TRY_OR_LOCK_TIMED_ERR(MLOCK_UPGRADE, part_num, "mlock_upgrade()");
                 } else { /* exclusive lock already held, bump count */
@@ -489,7 +489,7 @@ do_lock_x(MDBM* db, int pageno, int nonblock, int check)
                     errno = EPERM;
                     lock_error(db,"another partition locking conflict (locked=? want=%d)"
                         " excl_nest=%d, part_nest=%d, part_count=%d   ",
-                        part_num, 
+                        part_num,
                         exclusive_nest, part_nest, part_count);
                     return -1;
                 } else {
@@ -500,7 +500,7 @@ do_lock_x(MDBM* db, int pageno, int nonblock, int check)
             } else {
                 if (pageno == MDBM_LOCK_SHARED) {
                     /*NOTE("Lock(ASYNC) ANY SHARED"); */
-                    //fprintf(stderr, "@@@ do_lock_x-shared pid:%d tid:%d, \n", getpid(), gettid()); 
+                    //fprintf(stderr, "@@@ do_lock_x-shared pid:%d tid:%d, \n", getpid(), gettid());
                     TRY_OR_LOCK_TIMED_ERR(MLOCK_SHARED, MLOCK_ANY, "mlock_lock(shared)");
                 } else {
                     /*NOTE("Lock(ASYNC) PART"); */
@@ -513,7 +513,7 @@ do_lock_x(MDBM* db, int pageno, int nonblock, int check)
             }
         } else { /* Single lock (not partitioned/shared) */
             /*NOTE("Lock(ASYNC) SINGLE"); */
-            //fprintf(stderr, "@@@ do_lock_x-single pid:%d tid:%d, \n", getpid(), gettid()); 
+            //fprintf(stderr, "@@@ do_lock_x-single pid:%d tid:%d, \n", getpid(), gettid());
             TRY_OR_LOCK_TIMED_ERR(MLOCK_EXCLUSIVE, part_num, "mlock_lock(single)");
             if (locks->getHeldCount(MLOCK_EXCLUSIVE, true) == 1) {
                 prot = 1;
@@ -611,7 +611,7 @@ retry_replace:
             if (do_lock_x(db,locktype,nonblock,MDBM_LOCK_CHECK) < 0) {
                 return -1;
             }
-        } 
+        }
 
         if (db->db_dup_info) {
             if (db->db_dup_map_gen != db->db_dup_info->dup_map_gen) {
@@ -822,7 +822,7 @@ int do_lock_reset(const char* dbfilename, int flags) {
   //return -1;
   fprintf(stderr, "NOTE: Resetting locks for %s!\n", dbfilename);
   int need_check = 0;
-  MdbmLockBase* locks = (MdbmLockBase*)open_locks_inner(dbfilename, flags|MDBM_ANY_LOCKS, 0, &need_check); 
+  MdbmLockBase* locks = (MdbmLockBase*)open_locks_inner(dbfilename, flags|MDBM_ANY_LOCKS, 0, &need_check);
   if (!locks) {
     return -1;
   }

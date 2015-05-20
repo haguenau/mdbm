@@ -42,7 +42,7 @@ int mdbm_pool_parse_pool_size(const char *value);
  *    requested mdbm handles exceeds 3/4 of the maximum allowed number
  *    of processes (determined by getrlimit(RLIMIT_NPROC, ...)
  *    it will scale back accordingly.
- * 
+ *
  * \param vals integer array that includes the values to be checked. If the
  *  value is larger than the system limit as described above, the array is
  *  updated to reflect the new value
@@ -50,12 +50,12 @@ int mdbm_pool_parse_pool_size(const char *value);
  */
 void mdbm_pool_verify_pool_size(int *vals, int count);
 
-/** 
+/**
  * Create a pool of mdbm handles
  *
  * \param db MDBM handle that will be duplicated
  * \param size number of duplicated handles
- * 
+ *
  * \return pointer to newly created pool object. This object must
  *  destroyed using mdbm_pool_destroy_pool function.
  */
@@ -64,19 +64,19 @@ mdbm_pool_t *mdbm_pool_create_pool(MDBM *db, int size);
 /**
  * Delete a mdbm handle pool
  *
- * \param pool pointer to a pool object that was returned from 
+ * \param pool pointer to a pool object that was returned from
  *  calling mdbm_pool_create_pool function
  *
  * \return 1 if successful or 0 for failure.
- */ 
+ */
 int mdbm_pool_destroy_pool(mdbm_pool_t *pool);
 
-/** 
+/**
  * Acquire an MDBM handle for database operations. If there are no
  * available handles in the pool, the function will block until
  * there is one available.
  *
- * \param pool pointer to a pool object that was returned from 
+ * \param pool pointer to a pool object that was returned from
  *  calling mdbm_pool_create_pool function
  *
  * \return pointer to MDBM handle or NULL for failure. The MDBM
@@ -87,7 +87,7 @@ MDBM *mdbm_pool_acquire_handle(mdbm_pool_t *pool);
 /**
  * Release MDBM handle back to the pool
  *
- * \param pool pointer to a pool object that was returned from 
+ * \param pool pointer to a pool object that was returned from
  *  calling mdbm_pool_create_pool function
  * \param db pointer to the MDBM handle to be released back to the pool.
  *  This pointer must have been acquired from the mdbm_pool_acquire_handle call.
@@ -96,13 +96,13 @@ MDBM *mdbm_pool_acquire_handle(mdbm_pool_t *pool);
  */
 int mdbm_pool_release_handle(mdbm_pool_t *pool, MDBM *db);
 
-/** 
+/**
  * Acquire an exclusive MDBM handle for database operations.
  * The original MDBM handle that was used for duplication is returned
  * to the caller. The function guarnatees that all of the duplicated
  * MDBM handles are in the pool and nobody is using them.
  *
- * \param pool pointer to a pool object that was returned from 
+ * \param pool pointer to a pool object that was returned from
  *  calling mdbm_pool_create_pool function
  *
  * \return pointer to MDBM handle or NULL for failure. The MDBM
@@ -113,7 +113,7 @@ MDBM *mdbm_pool_acquire_excl_handle(mdbm_pool_t *pool);
 /**
  * Release an exclusive MDBM handle
  *
- * \param pool pointer to a pool object that was returned from 
+ * \param pool pointer to a pool object that was returned from
  *  calling mdbm_pool_create_pool function
  * \param db pointer to the exclusive MDBM handle to be released.
  *  This pointer must have been acquired from the mdbm_pool_acquire_excl_handle call.
@@ -152,19 +152,19 @@ int mdbm_pool_release_excl_handle(mdbm_pool_t *pool, MDBM *db);
  * \code
  *
  * // get mdbm handle from the pool
- * 
+ *
  * if ((dbh = mdbm_pool_acquire_handle(pool, NULL)) == NULL)
  *   return;
- * 
- * // lock the mdbm handle 
- * 
+ *
+ * // lock the mdbm handle
+ *
  * if (mdbm_lock(dbh) != 1) {
  *   mdbm_pool_release_handle(pool, dbh, NULL);
  *   return;
  * }
- * 
+ *
  * // carry out your mdbm operations ...
- * 
+ *
  * // unlock and return the handle to the pool
  *
  * mdbm_unlock(dbh);

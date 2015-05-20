@@ -3579,7 +3579,7 @@ class LockV3TestSuitePLock : public LockV3TestSuite
     CPPUNIT_TEST(ThrdParentTryPlockChildPlockKeysInDiffPart);
     CPPUNIT_TEST(ParentPlockChildTryPlockKeysInDiffPartions);
 
-    // Tests of mdbm_isowned() 
+    // Tests of mdbm_isowned()
     CPPUNIT_TEST(test_OtherAG1);
     CPPUNIT_TEST(test_OtherAG2);
     CPPUNIT_TEST(test_OtherAG3);

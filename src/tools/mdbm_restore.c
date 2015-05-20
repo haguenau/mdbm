@@ -96,7 +96,7 @@ main (int argc, char** argv)
     }
 
     if (mdbm_restore(db,argv[optind+1]) < 0) {
-        fprintf(stderr,PREFIX "restore failed: %s\n",strerror(errno));  
+        fprintf(stderr,PREFIX "restore failed: %s\n",strerror(errno));
         return 2;
     }
 

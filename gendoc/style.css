@@ -18,7 +18,7 @@ A:hover { color: red }
 
 .hl {
   color: black;
-  background: #ffff99 
+  background: #ffff99
 }
 
 .example {
@@ -51,13 +51,13 @@ pre.example, pre.deprecated {
 .note {
   color: black;
   background: #ffddff;
-  padding: 0.50em;  
+  padding: 0.50em;
   font-size: smaller;
 }
 
 H1, H2, H3, H4, H5, H6 {
   font-family: verdana, arial, helvetica, sans-serif;
-  /* Netscape 4.x sucks! Cannot fix header margins...  margin-bottom: 0.5em; 
+  /* Netscape 4.x sucks! Cannot fix header margins...  margin-bottom: 0.5em;
      Need to use div instead, because div has default 0 margins. */
 }
 

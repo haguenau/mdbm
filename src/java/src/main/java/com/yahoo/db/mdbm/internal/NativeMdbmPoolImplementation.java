@@ -12,9 +12,9 @@ import com.yahoo.db.mdbm.exceptions.MdbmPoolAcquireHandleFailedException;
 
 /**
  * Wrapper around ccmp
- * 
+ *
  * @author areese
- * 
+ *
  */
 class NativeMdbmPoolImplementation extends DeallocatingClosedBase implements MdbmPoolInterface {
 

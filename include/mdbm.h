@@ -5,8 +5,8 @@
  *
  * Modifications for:
  *      . Large object storage
- *      . Overflow pages 
- *      . Windowed mode access 
+ *      . Overflow pages
+ *      . Windowed mode access
  *      . Hash-based intra-page scanning
  * By Rick Reed
  *
@@ -2472,7 +2472,7 @@ typedef struct mdbm_bsops {
  * very large. Please refer to \ref mdbm_set_window_size for window size
  * restrictions.
  *
- * NOTE: The file-based backing store (MDBM_BSOPS_FILE) is really just for 
+ * NOTE: The file-based backing store (MDBM_BSOPS_FILE) is really just for
  * demonstration purposes, and should not be used.
  *
  * An \ref mdbm_store on \a cachedb must be used to update data in the backing
@@ -2728,8 +2728,8 @@ extern int mdbm_preload(MDBM* db);
  * The counts are in units of the system-page-size (typically 4k)
  *
  * \param[in,out] db Database handle
- * \param[out] pgs_in count of memory resident pages 
- * \param[out] pgs_out count of swapped out pages 
+ * \param[out] pgs_in count of memory resident pages
+ * \param[out] pgs_out count of swapped out pages
  * \return check status
  * \retval -1 Error
  * \retval  0 Success

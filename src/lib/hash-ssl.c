@@ -43,7 +43,7 @@ void MD5Init(MD5_CTX* ctx) {
   ctx->bits[0] = 0;
   ctx->bits[1] = 0;
   ctx->finished = 0;
-  memset(ctx->in, 0, sizeof(ctx->in)); 
+  memset(ctx->in, 0, sizeof(ctx->in));
 }
 void MD5Transform(MD5_CTX* ctx) {
   uint32_t *state = ctx->state;
@@ -310,7 +310,7 @@ void SHA1_Final(uint8_t *digest, SHA_CTX *s) {
 #ifndef SHA_BIG_ENDIAN
     /* Swap byte order back */
     for (i=0; i<5; i++) {
-        s->state[i]= 
+        s->state[i]=
               (((s->state[i])<<24)& 0xff000000)
             | (((s->state[i])<<8) & 0x00ff0000)
             | (((s->state[i])>>8) & 0x0000ff00)

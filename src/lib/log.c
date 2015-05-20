@@ -21,11 +21,11 @@
       MDBM_LOG_LOGFILE = 0x4,
       MDBM_LOG_STDERR = 0x8
   };
-  
+
   enum MDBM_LOG_LEVEL { // matching ysys_log declarations
       MDBM_LOG_NONE = -1,
       MDBM_LOG_OFF = -1,
-  
+
       MDBM_LOG_EMERGENCY = LOG_EMERG,
       MDBM_LOG_ALERT = LOG_ALERT,
       MDBM_LOG_CRITICAL = LOG_CRIT,
@@ -37,7 +37,7 @@
       MDBM_LOG_DEBUG2 = LOG_DEBUG+1,
       MDBM_LOG_DEBUG3 = LOG_DEBUG+2,
       MDBM_LOG_MAXLEVEL,
-  
+
       MDBM_LOG_ABORT = LOG_EMERG,
       MDBM_LOG_FATAL = LOG_ALERT
   };
@@ -58,8 +58,8 @@ int mdbm_log_register_plugin(mdbm_log_plugin_t plugin) {
   log_plugin_list[log_plugin_count++]=plugin;
 
   /* default to stderr */
-  if (!(dest && dest[0])) { 
-    dest = "stderr"; 
+  if (!(dest && dest[0])) {
+    dest = "stderr";
   }
   if (!strcmp(dest, plugin.name)) {
     /* we have a match.. select it */
@@ -74,7 +74,7 @@ int mdbm_select_log_plugin(const char* name) {
   /* so linear scan is enough */
   for (i=log_plugin_count-1; i>=0; --i) {
     mdbm_log_plugin_t cur = log_plugin_list[i];
-    if (!strcmp(name, cur.name)) { 
+    if (!strcmp(name, cur.name)) {
       log_plugin=cur;
       return 0;
     }

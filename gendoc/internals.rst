@@ -9,7 +9,7 @@ Internal MDBM Information
 **MDBM V3 File Format**
 
     The information below should only be used to understand the workings of MDBM!!  However,
-    please do not use the information provided below to access data in MDBM Files, as it may 
+    please do not use the information provided below to access data in MDBM Files, as it may
     change in the future.  Compatibility with the data format below is NOT guaranteed,
     so please use only APIs and tools that were provided by the MDBM team.
 
@@ -23,19 +23,19 @@ Internal MDBM Information
     chunk will most likely be more than one page long.
 
     Each chunk starts with a mdbm_page_t structure (including the initial one).
-    Each chunk contains a size (p_num_pages), and an offset to the previous chunk 
+    Each chunk contains a size (p_num_pages), and an offset to the previous chunk
     (p_prev_num_pages). Together, these form a doubly linked list.
 
-    The p_type field of mdbm_page_t near the start of each chunk identifies the chunk type, 
+    The p_type field of mdbm_page_t near the start of each chunk identifies the chunk type,
     which is one of MDBM_PTYPE_DIR, MDBM_PTYPE_DATA, MDBM_PTYPE_LOB, or MDBM_PTYPE_FREE.
 
-    The first chunk (type DIR) contains the file header, directory bit vector, and 
+    The first chunk (type DIR) contains the file header, directory bit vector, and
     page-table.  Successive chunks include normal/data pages, oversized pages, large-object pages,
     and free-pages.
 
-    Free-pages (type FREE) contain a "next" pointer (p_next_free), and the first page is 
-    referenced by h_first_free, forming a singly-linked-list. Newly freed pages should 
-    be inserted into the free list sorted by address, and adjacent free pages should be 
+    Free-pages (type FREE) contain a "next" pointer (p_next_free), and the first page is
+    referenced by h_first_free, forming a singly-linked-list. Newly freed pages should
+    be inserted into the free list sorted by address, and adjacent free pages should be
     coalesced into a single chunk.
 
     The directory is a linear array of bits, used to convert hash values of keys
@@ -43,22 +43,22 @@ Internal MDBM Information
     MDBM how to find the logical page number where a particular data item is stored using
     a hash of the data item's key.  A logical page number determines the index into the page
     table, which is a linear array of integers that point to actual physical pages in the db.
-    This provides a level of indirection that allows physical pages to be changed 
+    This provides a level of indirection that allows physical pages to be changed
     (moved/expanded/defragged/rearranged) very quickly.
 
-    Data pages (type DATA) contain a series of entry meta-data structures (mdbm_entry_t) 
-    at the beginning (lowest VMA) of the page, and the actual key and value data grows 
-    down from the end (highest VMA) of the page(s).  Oversized data chunk may span multiple 
+    Data pages (type DATA) contain a series of entry meta-data structures (mdbm_entry_t)
+    at the beginning (lowest VMA) of the page, and the actual key and value data grows
+    down from the end (highest VMA) of the page(s).  Oversized data chunk may span multiple
     contiguous physical pages.  An oversized chunk has mdbm_page_t.p_num_pages of more than 1.
 
     The mdbm_entry_t structure contains the length and part of the hash for the key to enable
     fast scanning of a page. Deleted entries are signaled by a key length of 0, to allow
     for fast deletion, at the cost of possible defragmentation later.
 
-    Large-object (type LOB) chunks contain db entries that exceed the capacity of a single 
-    data page.  Because we return found entries to users as a pointer+length pair, we 
-    cannot fragment these entries, so they are stored externally to the data page to 
-    which they logically belong. The l_pagenum entry points back to the logical page 
+    Large-object (type LOB) chunks contain db entries that exceed the capacity of a single
+    data page.  Because we return found entries to users as a pointer+length pair, we
+    cannot fragment these entries, so they are stored externally to the data page to
+    which they logically belong. The l_pagenum entry points back to the logical page
     the large-object belongs to.
 
 **File Format Notes**
@@ -74,7 +74,7 @@ Internal MDBM Information
 
     The MDBM file handle (MDBM \*) contains a lock count, which allows for very fast checking
     of whether an MDBM is locked by your process or thread.  This also means that MDBM handles
-    cannot be shared among processes or threads.  It is also necessary because pthreads 
+    cannot be shared among processes or threads.  It is also necessary because pthreads
     does not provide a way to get the lock-count (how many times a lock has been locked).
     With a multi-process/single-thread use case, each process should first fork, then mdbm_open()
     the MDBM.  With a multi-threaded use case, one thread (e.g. by using pthread_once), should

@@ -17,7 +17,7 @@ TESTS=                       \
 
 
 MYLIBS =  -L$(TOPDIR)/src/lib/$(OBJDIR) -lmdbm
-MYLIBS += -lpthread -lrt -lstdc++ -lreadline -lcppunit 
+MYLIBS += -lpthread -lrt -lstdc++ -lreadline -lcppunit
 LD_EXTRA += $(MYLIBS) -lcppunit $(LOCAL_LDADD)
 CXXFLAGS += -I$(TOPDIR)/src/lib
 
@@ -27,7 +27,7 @@ TESTEXES= $(patsubst %, $(OBJDIR)/%, $(TESTS))
 LD_LIB_PATH=LD_LIBRARY_PATH=$(TOPDIR)/src/lib/$(OBJDIR):$(LD_LIBRARY_PATH)
 
 # generate xml test results...
-RUN_ARGS= -tall -x $(1).xml 
+RUN_ARGS= -tall -x $(1).xml
 
 default-make-target: $(TESTEXES)
 
@@ -60,7 +60,7 @@ valg:: $(TESTEXES)
 # 	$(OBJDIR)/create_destroy 4
 # 	$(OBJDIR)/create_destroy 32
 # 	$(OBJDIR)/create_destroy 128
-# 
+#
 # test_acquire_mt:
 # 	$(OBJDIR)/acquire_mt 32 16
 # 	$(OBJDIR)/acquire_mt 32 32
@@ -68,7 +68,7 @@ valg:: $(TESTEXES)
 
 clean :: clean-objs $(foreach exe, $(TESTS), clean-exe-$(exe))
 #clean :
-#	rm -f *.d $(OBJDIR)/*.o $(OBJDIR)/*.lib $(OBJDIR)/*.so *.xml 
+#	rm -f *.d $(OBJDIR)/*.o $(OBJDIR)/*.lib $(OBJDIR)/*.so *.xml
 #	rm -f $(TESTEXES) $(OBJDIR)/CppUnitTestRunner
 
 

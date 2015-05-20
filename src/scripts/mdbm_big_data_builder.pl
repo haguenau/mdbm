@@ -28,7 +28,7 @@ This command will retain the bucket files after import to the mdbm.
 
 When the amount of physical memory is significantly smaller than the size of
 a dataset, populating an mdbm can take a long time (ex., 90GB dataset) due
-to page thrashing. 
+to page thrashing.
 This program is used to speedup building of larger-than-physical-memory mdbm
 databases from CDB or db_dump format input files.
 
@@ -81,7 +81,7 @@ my $PerformTiming = 0; # flag - time major processing if turned on
 my $SplitTimerFile   = "bigDataSplitTime";
 
 # log for mdbm_import'ing : it will contain multiple time entries, 1 per timing
-# per bucket file. Later it will be parsed to summarize the totals for all imports. 
+# per bucket file. Later it will be parsed to summarize the totals for all imports.
 my $ImportTimerFile  = "bigDataImportTime";
 
 # final log file containing summary of times and processing details - such as
@@ -107,7 +107,7 @@ Options:
 -d db size,          used by mdbm_import
 -l,                  large object flag, used by mdbm_import
 -p page size,        used by  mdbm_import, default is 4096
--s, --hash-function hashcode, REQUIRED parameter, the following numbers or 
+-s, --hash-function hashcode, REQUIRED parameter, the following numbers or
                               associated case-insensitive strings may be used:
     0   'CRC'
     1   'EJB'
@@ -314,7 +314,7 @@ sub setupImportOptions
         # check the MaxPages against $maxNumPagesAllowed
         $maxPagesCalc = sizeInBytes($MaxPages);
         if ($maxPagesCalc > $maxNumPagesAllowed) {
-            warn "Maximum specified number pages=$MaxPages bigger than allowed maximum number of pages=$maxNumPagesAllowed";  
+            warn "Maximum specified number pages=$MaxPages bigger than allowed maximum number of pages=$maxNumPagesAllowed";
             $maxPagesCalc = $maxNumPagesAllowed;
             $MaxPages = $maxPagesCalc;
             warn "Maximum number of pages reset to $MaxPages";
@@ -414,7 +414,7 @@ sub importFilesAndBuildMdbm
 sub sumTimesFromFile($)
 {
     my ($timingFile) = @_;
-   
+
     my $realTimeSum = 0.0;
     my $userTimeSum = 0.0;
     my $sysTimeSum  = 0.0;

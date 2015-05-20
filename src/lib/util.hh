@@ -90,7 +90,7 @@ class AutoTSC {
 public:
   uint64_t        start;
   const char     *label;
-  AccumTSCRecord *rec; 
+  AccumTSCRecord *rec;
   AutoTSC(const char* lbl, AccumTSCRecord* rec) : rec(rec) {
     label = lbl;
     start = rdtsc();
@@ -120,8 +120,8 @@ public:
 #define prefetch(x) __builtin_prefetch(x)
 
 
-//#define CHECKPOINTV(msg, ...) fprintf(stderr, "%d %s:%d::%s() "msg"\n", getpid(), __FILE__, __LINE__, __PRETTY_FUNCTION__,__VA_ARGS__); 
-#define CHECKPOINTV(msg, ...) 
+//#define CHECKPOINTV(msg, ...) fprintf(stderr, "%d %s:%d::%s() "msg"\n", getpid(), __FILE__, __LINE__, __PRETTY_FUNCTION__,__VA_ARGS__);
+#define CHECKPOINTV(msg, ...)
 
 //#define TRACE_LOCKS
 #define PRINT_LOCK_TRACE(msg) {                                                  \

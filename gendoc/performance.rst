@@ -44,7 +44,7 @@ operations and also optionally the time, in microseconds, that it takes to perfo
 
 The overhead of calling an empty callback is less than 1%, and we were trying to make sure that
 the internal mechanism we use to provide time delta information to the callback has an
-overhead that is 5% or less of an MDBM fetch or store. 
+overhead that is 5% or less of an MDBM fetch or store.
 
 The first step we took was to measure the overhead of timed operations, which then pass
 the data to the callback.
@@ -86,7 +86,7 @@ For a 100 byte fetch or store, the overhead was:
 
 .. _improving-stat-performance:
 
-Using TSC to improve performance 
+Using TSC to improve performance
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Given the above results, we decided to modify MDBM to use the CPU TSC to improve the performance

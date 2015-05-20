@@ -73,7 +73,7 @@ profile::
 	make MODE=profile make-recursive-default-make-target
 test-prof::
 	make MODE=profile make-recursive-test
-test-fast:: 
+test-fast::
 	make FAST=1 make-recursive-test
 valg-fast::
 	make FAST=1 make-recursive-valg
@@ -93,7 +93,7 @@ else
   OBJDIR=$(OBJDIR_BASE)
 endif
 LOCAL_LDADD = -L$(TOPDIR)/src/lib/$(OBJDIR)
-COMP_FLAGS +=  -g -O2 -I/usr/include -I$(INCDIR) -I$(TOPDIR)/include -I. -Wall -fPIC 
+COMP_FLAGS +=  -g -O2 -I/usr/include -I$(INCDIR) -I$(TOPDIR)/include -I. -Wall -fPIC
 
 # get gcc version (space-separated components)
 GCC_VER_SPC=$(shell gcc -dumpversion | tr '.' ' ')
@@ -104,7 +104,7 @@ GCC_GTE_48=$(shell expr $(GCC_VER_INT) \>= 400080000)
 
 PEDANTIC = -Wall -pedantic  -Wno-variadic-macros -Wno-long-long -Wno-overlength-strings
 # New CLang/LLVM settings
-#PEDANTIC += -Wno-format-security -Wno-c99-extensions 
+#PEDANTIC += -Wno-format-security -Wno-c99-extensions
 PEDANTIC += -Wno-format-security -Wno-unused-result
 #PEDANTIC += -Wno-unused-value
 # stop dead on warnings...
@@ -116,7 +116,7 @@ ifeq ("$(GCC_GTE_48)", "1")
 PEDANTIC += -Wunreachable-code
 endif
 
-ifeq ($(DISABLE_TSC),1) 
+ifeq ($(DISABLE_TSC),1)
   COMP_FLAGS += -DDISABLE_TSC
 endif
 
@@ -171,7 +171,7 @@ run-$(1): $(OBJDIR)/$(1)
 	@echo; echo "###### Running " $(1) "######"; echo
 	$(LD_LIB_PATH) $(RUN_PREFIX) $(OBJDIR)/$(strip $1) $(RUN_ARGS)
 valg-$(1): $(OBJDIR)/$(1)
-	@echo; echo "###### Running " $(1) " (valgrind) ######"; echo 
+	@echo; echo "###### Running " $(1) " (valgrind) ######"; echo
 	$(LD_LIB_PATH) VALG=1 $(RUN_PREFIX) ./valgrind_runner.sh $(OBJDIR)/$(strip $1) $(RUN_ARGS)
 endef
 
@@ -191,7 +191,7 @@ run-$(1): $(OBJDIR)/$(1)
 	@echo; echo "###### Running " $(1) "######"; echo
 	$(LD_LIB_PATH) $(RUN_PREFIX) $(OBJDIR)/$(strip $1) $(RUN_ARGS)
 valg-$(1): $(OBJDIR)/$(1)
-	@echo; echo "###### Running " $(1) " (valgrind) ######"; echo 
+	@echo; echo "###### Running " $(1) " (valgrind) ######"; echo
 	$(LD_LIB_PATH) VALG=1 $(RUN_PREFIX) ./valgrind_runner.sh $(OBJDIR)/$(strip $1) $(RUN_ARGS)
 endef
 

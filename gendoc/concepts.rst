@@ -30,7 +30,7 @@ important in determining whether mdbm will work well.
 Size Limits
 -----------
 
-  - A 32-bit process can access 4G of memory (2^32), so depending on system 
+  - A 32-bit process can access 4G of memory (2^32), so depending on system
     configuration around 3.5G may be allocated for MDBM use.
     On a 64-bit machine, this limit is much higher (2^64), so practical
     MDBM size is more constrained by the size of your data's working set that
@@ -722,7 +722,7 @@ The following example shows an invalid multi-threaded usage of MDBM:
   - Thread B: mdbm_dup_handle(handle1), or any other operation
   - Other MDBM operations, by both threads
   - Thread A: mdbm_unlock(handle1)
- 
+
 Example G: Correct usage under multi-threaded applications
 
   - "Parent Thread" creates an MDBM handle pool, using mdbm_dup_handle.

@@ -449,7 +449,7 @@ void SmokeTestBackStoreSuite::FetchLargeObj(MDBM *cache_db, int key) {
     CPPUNIT_ASSERT(fetched1.dptr != NULL);
 }
 
-class MdbmSmokeTest : public SmokeTestBackStoreSuite { 
+class MdbmSmokeTest : public SmokeTestBackStoreSuite {
     CPPUNIT_TEST_SUITE(MdbmSmokeTest);
       CPPUNIT_TEST(initialSetup);
       CPPUNIT_TEST(smoke_test_backstore_01);   // TC 01

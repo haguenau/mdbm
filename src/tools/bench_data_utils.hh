@@ -23,18 +23,18 @@
 
 #include "mdbm.h"
 
-    
+
 extern "C" {
-int benchmarkExisting(const char *filename, double percentWrites, int lockmode, 
+int benchmarkExisting(const char *filename, double percentWrites, int lockmode,
                        const char *outputfile, uint opCount, int verbose);
-}   
+}
 
 class FileStorage
 {
 
 public:
 
-    FileStorage(const std::string &fname) : 
+    FileStorage(const std::string &fname) :
                 filename_(fname), count_(0), map_(NULL), mapsize_(0)
     {
     }
@@ -73,7 +73,7 @@ public:
         return fname;
     }
 
-    bool 
+    bool
     readData(std::string const &fname, std::vector<datum> &dataVec)
     {
         int fd = open(fname.c_str(), O_RDONLY, 0444);
@@ -101,7 +101,7 @@ public:
         while ((cur - map_) < mapsize_) {
             dta.dsize = *(reinterpret_cast<int *>(cur));
             if (dta.dsize <= 0) {
-                std::cerr << "Invalid size in file: " << fname << ", at offset " << (cur - map_) 
+                std::cerr << "Invalid size in file: " << fname << ", at offset " << (cur - map_)
                           << std::endl;
                 continue;
             }
@@ -155,7 +155,7 @@ public:
     }
 
     RandomKeyBatch(const std::string &fname, uint topSize = 256 * MB)
-        : filename_(fname), maxSize_(topSize) 
+        : filename_(fname), maxSize_(topSize)
     {
         firstTime_ = true;
         db_ = NULL;
@@ -185,7 +185,7 @@ public:
         if (key.dsize == 0) {
             std::cerr << "Too few keys in DB" << std::endl;
             return false;
-        } 
+        }
 
         uint size = 0;
         do {

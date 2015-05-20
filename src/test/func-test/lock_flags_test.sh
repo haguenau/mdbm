@@ -3,7 +3,7 @@
 pass=1
 
 function check() {
-  if [ $? -ne 0 ]; then 
+  if [ $? -ne 0 ]; then
     echo "FAILED"
     pass=0
   else
@@ -87,7 +87,7 @@ check_nones
 
 echo "--------------------------- done ---------------------"
 
-if [ $pass -ne 1 ]; then 
+if [ $pass -ne 1 ]; then
   echo "SOME TESTS FAILED"
   exit 1
 else
